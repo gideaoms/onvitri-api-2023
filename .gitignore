@@ -1,0 +1,8 @@
+tmp/*
+!tmp/.gitkeep
+!tmp/200x200/.gitkeep
+node_modules
+.vscode
+dist
+coverage
+.env

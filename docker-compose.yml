@@ -1,0 +1,89 @@
+version: '3.9'
+
+volumes:
+  onvitri_postgres:
+  onvitri_redis:
+
+services:
+  onvitri_api:
+    container_name: onvitri_api
+    image: bitnami/node:18.12.1
+    env_file:
+      - .env
+    command: npm run dev:server
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    working_dir: /usr/app
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    tty: true
+    depends_on:
+      onvitri_postgres:
+        condition: service_healthy
+    restart: on-failure
+    logging:
+      options:
+        max-size: "1b"
+        max-file: "5"
+
+  onvitri_worker:
+    container_name: onvitri_worker
+    image: bitnami/node:18.12.1
+    env_file:
+      - .env
+    command: npm run dev:worker
+    working_dir: /usr/app
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    tty: true
+    depends_on:
+      onvitri_postgres:
+        condition: service_healthy
+    restart: on-failure
+    logging:
+      options:
+        max-size: "1b"
+        max-file: "5"
+
+  onvitri_postgres:
+    container_name: onvitri_postgres
+    image: bitnami/postgresql:12.5.0
+    env_file:
+      - .env
+    ports:
+      - ${DATABASE_PORT}:5432
+    environment:
+      POSTGRESQL_USERNAME: ${DATABASE_USER}
+      POSTGRESQL_PASSWORD: ${DATABASE_PASS}
+      POSTGRESQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - onvitri_postgres:/bitnami/postgresql
+    healthcheck:
+      test: pg_isready --username $DATABASE_NAME
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    tty: true
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  onvitri_redis:
+    container_name: onvitri_redis
+    image: bitnami/redis:7.0.2
+    env_file:
+      - .env
+    ports:
+      - ${REDIS_PORT}:6379
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASS}
+    volumes:
+      - onvitri_redis:/bitnami/redis/data
+    tty: true
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
