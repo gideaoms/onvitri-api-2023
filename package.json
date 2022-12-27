@@ -8,8 +8,8 @@
     "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
     "serve": "node dist/main.js",
     "dev:serve": "npx tsx src/main.ts",
-    "lint": "",
-    "test": "",
+    "lint": "npx eslint",
+    "test": "npx vitest --run",
     "prepare": "npx husky install"
   },
   "keywords": [],
@@ -37,6 +37,8 @@
     "prettier": "^2.8.1",
     "tsc-alias": "^1.8.2",
     "tsx": "^3.12.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vite-tsconfig-paths": "^4.0.3",
+    "vitest": "^0.26.2"
   }
 }

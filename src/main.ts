@@ -1,12 +1,5 @@
-import { User } from '@/user.js'
+import { User } from '@/core/user.js'
 
-const user = new User({ name: 'This is a name', status: 'I', roles: ['common'] })
-
-if (!user.isActive()) {
-  const activatedUser = user.toActive()
-  console.log(activatedUser)
-} else {
-  console.log(user)
-}
+export const user = new User({ name: 'This is a name', status: 'I', roles: ['common'] })
 
 export const Test = 3
