@@ -5,14 +5,19 @@
   "main": "dist/main.js",
   "type": "module",
   "scripts": {
-    "dist": "tsc && tsc-alias && copyfiles --up 2 src/email-templates dist/email-templates",
-    "server": "node dist/main.js",
-    "dev:server": "tsx src/main.ts"
+    "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
+    "serve": "node dist/main.js",
+    "dev:serve": "npx tsx src/main.ts",
+    "lint": "",
+    "test": "",
+    "prepare": "npx husky install"
   },
   "keywords": [],
   "author": "Gideão Silva <gideaoms@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@types/node": "^18.11.17",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
@@ -25,6 +30,8 @@
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "tsc-alias": "^1.8.2",
     "tsx": "^3.12.1",

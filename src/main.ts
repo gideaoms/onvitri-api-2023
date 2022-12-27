@@ -1,6 +1,6 @@
 import { User } from '@/user.js'
 
-const user = new User({ name: 'This is a name', status: 'I' })
+const user = new User({ name: 'This is a name', status: 'I', roles: ['common'] })
 
 if (!user.isActive()) {
   const activatedUser = user.toActive()
