@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
-    "serve": "node dist/main.js",
-    "dev:serve": "npx tsx src/main.ts",
+    "server": "node dist/main.js",
+    "server:dev": "npx tsx src/main.ts",
     "lint": "npx eslint",
     "test": "npx vitest --run",
     "prepare": "npx husky install"
@@ -35,10 +35,14 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
+    "prisma": "^4.8.0",
     "tsc-alias": "^1.8.2",
     "tsx": "^3.12.1",
     "typescript": "^4.9.4",
     "vite-tsconfig-paths": "^4.0.3",
     "vitest": "^0.26.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.8.0"
   }
 }
