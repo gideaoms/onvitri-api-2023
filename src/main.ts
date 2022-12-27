@@ -9,4 +9,4 @@ if (!user.isActive()) {
   console.log(user)
 }
 
-export const Test = 2
+export const Test = 3
