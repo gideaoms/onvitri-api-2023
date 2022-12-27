@@ -1,5 +1,8 @@
+import { Store } from '@/core/store.js'
+
 type StoreRepository = {
-  findMany(page: number): Promise<void>
+  create(store: Store): Promise<Store>
+  findMany(page: number): Promise<Store[]>
 }
 
 export { StoreRepository }

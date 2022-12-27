@@ -24,6 +24,7 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/lines-between-class-members": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "class-methods-use-this": "off"
   }
 }
