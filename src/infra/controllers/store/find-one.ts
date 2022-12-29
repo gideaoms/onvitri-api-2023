@@ -13,54 +13,50 @@ async function Controller(fastify: FastifyInstance) {
         store_id: Type.String({ format: 'uuid' }),
       }),
       response: {
-        200: Type.Intersect([
-          Type.Object({
+        200: Type.Object({
+          id: Type.String(),
+          // fantasy_name: Type.String(),
+          // street: Type.String(),
+          // number: Type.String(),
+          // neighborhood: Type.String(),
+          // phone: Type.Object({
+          //   country_code: Type.String(),
+          //   area_code: Type.String(),
+          //   number: Type.String(),
+          // }),
+          // zip_code: Type.String(),
+          status: Type.String(),
+          city: Type.Object({
             id: Type.String(),
-            // fantasy_name: Type.String(),
-            // street: Type.String(),
-            // number: Type.String(),
-            // neighborhood: Type.String(),
-            // phone: Type.Object({
-            //   country_code: Type.String(),
-            //   area_code: Type.String(),
-            //   number: Type.String(),
-            // }),
-            // zip_code: Type.String(),
-            status: Type.String(),
+            name: Type.String(),
+            initials: Type.String(),
           }),
-          Type.Object({
-            city: Type.Object({
+          products: Type.Array(
+            Type.Object({
               id: Type.String(),
-              name: Type.String(),
-              initials: Type.String(),
+              // store_id: Type.String(),
+              // title: Type.String(),
+              description: Type.String(),
+              // price: Type.Integer(),
+              // status: Type.String(),
+              // pictures: Type.Array(
+              //   Type.Object({
+              //     id: Type.String(),
+              //     variants: Type.Array(
+              //       Type.Object({
+              //         url: Type.String(),
+              //         ext: Type.String(),
+              //         name: Type.String(),
+              //         size: Type.String(),
+              //         width: Type.Integer(),
+              //         height: Type.Integer(),
+              //       }),
+              //     ),
+              //   }),
+              // ),
             }),
-            products: Type.Array(
-              Type.Object({
-                id: Type.String(),
-                // store_id: Type.String(),
-                // title: Type.String(),
-                description: Type.String(),
-                // price: Type.Integer(),
-                // status: Type.String(),
-                // pictures: Type.Array(
-                //   Type.Object({
-                //     id: Type.String(),
-                //     variants: Type.Array(
-                //       Type.Object({
-                //         url: Type.String(),
-                //         ext: Type.String(),
-                //         name: Type.String(),
-                //         size: Type.String(),
-                //         width: Type.Integer(),
-                //         height: Type.Integer(),
-                //       }),
-                //     ),
-                //   }),
-                // ),
-              }),
-            ),
-          }),
-        ]),
+          ),
+        }),
         '4xx': Type.Object({ message: Type.String() }),
       },
     },

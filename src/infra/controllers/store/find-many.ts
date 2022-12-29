@@ -13,29 +13,25 @@ async function Controller(fastify: FastifyInstance) {
       }),
       response: {
         200: Type.Array(
-          Type.Intersect([
-            Type.Object({
+          Type.Object({
+            id: Type.String(),
+            // fantasy_name: Type.String(),
+            // street: Type.String(),
+            // number: Type.String(),
+            // neighborhood: Type.String(),
+            // phone: Type.Object({
+            //   country_code: Type.String(),
+            //   area_code: Type.String(),
+            //   number: Type.String(),
+            // }),
+            // zip_code: Type.String(),
+            status: Type.String(),
+            city: Type.Object({
               id: Type.String(),
-              // fantasy_name: Type.String(),
-              // street: Type.String(),
-              // number: Type.String(),
-              // neighborhood: Type.String(),
-              // phone: Type.Object({
-              //   country_code: Type.String(),
-              //   area_code: Type.String(),
-              //   number: Type.String(),
-              // }),
-              // zip_code: Type.String(),
-              status: Type.String(),
+              name: Type.String(),
+              initials: Type.String(),
             }),
-            Type.Object({
-              city: Type.Object({
-                id: Type.String(),
-                name: Type.String(),
-                initials: Type.String(),
-              }),
-            }),
-          ]),
+          }),
         ),
       },
     },
