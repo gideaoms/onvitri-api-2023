@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { findProduct } from '@/infra/queries/product/find-one.js'
+import { findProduct } from '@/infra/queries/product/find-product.js'
 import { isFailure } from '@/utils/either.js'
 
 async function Controller(fastify: FastifyInstance) {

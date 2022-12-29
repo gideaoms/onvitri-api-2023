@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
 import { isFailure } from '@/utils/either.js'
-import { findStore } from '@/infra/queries/store/find-one.js'
+import { findStore } from '@/infra/queries/store/find-store.js'
 
 async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({

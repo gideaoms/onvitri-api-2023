@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { findStores } from '@/infra/queries/store/find-many.js'
+import { findStores } from '@/infra/queries/store/find-stores.js'
 
 async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
