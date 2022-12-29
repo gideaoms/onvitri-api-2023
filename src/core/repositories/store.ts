@@ -1,7 +1,8 @@
 import { Store } from '@/core/store.js'
+import { Either } from '@/utils/either.js'
 
 type StoreRepository = {
-  create(store: Store): Promise<Store>
+  findOne(storeId: string): Promise<Either<Error, Store>>
   findMany(page: number): Promise<Store[]>
 }
 

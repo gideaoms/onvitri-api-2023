@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  active
+  inactive
+}
+
 model City {
   id         String   @id @default(uuid()) @db.Uuid
   created_at DateTime @default(now())
@@ -25,9 +30,10 @@ model User {
   updated_at      DateTime @updatedAt
   name            String
   email           String   @unique
-  status          String
+  status          Status
   validation_code String?
-  Store           Store[]
+
+  Store Store[]
 
   @@map("users")
 }
@@ -43,7 +49,7 @@ model Store {
   number       String
   neighborhood String
   phone        Json
-  status       String
+  status       Status
 
   city     City      @relation(fields: [city_id], references: [id])
   owner    User      @relation(fields: [owner_id], references: [id])
@@ -58,8 +64,8 @@ model Product {
   updated_at  DateTime @updatedAt
   store_id    String   @db.Uuid
   description String   @db.Text
-  pictures    Json
-  status      String
+  images      Json
+  status      Status
 
   store Store @relation(fields: [store_id], references: [id])
 

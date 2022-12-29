@@ -2,12 +2,12 @@
   "name": "onvitri-api",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/server.js",
   "type": "module",
   "scripts": {
     "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
-    "server": "node dist/main.js",
-    "server:dev": "npx tsx src/main.ts",
+    "server": "node dist/server.js",
+    "server:dev": "npx tsx watch src/server.ts",
     "lint": "npx eslint",
     "test": "npx vitest --run",
     "prepare": "npx husky install"
@@ -43,6 +43,16 @@
     "vitest": "^0.26.2"
   },
   "dependencies": {
-    "@prisma/client": "^4.8.0"
+    "@fastify/autoload": "^5.6.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/multipart": "^7.3.0",
+    "@fastify/static": "^6.6.0",
+    "@fastify/type-provider-typebox": "^2.4.0",
+    "@prisma/client": "^4.8.0",
+    "@sentry/node": "^7.28.1",
+    "@sentry/tracing": "^7.28.1",
+    "@sinclair/typebox": "^0.25.16",
+    "fastify": "^4.10.2"
   }
 }

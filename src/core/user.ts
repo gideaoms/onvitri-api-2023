@@ -13,25 +13,6 @@ class User {
     this.status = user.status
     this.roles = user.roles
   }
-
-  public isActive(): boolean {
-    return this.status === 'A'
-  }
-
-  public toActive(): User {
-    return new User({ ...this, status: 'A' })
-  }
-
-  public isAdmin(): boolean {
-    return Boolean(this.roles.find(role => role === 'admin'))
-  }
-
-  public toAdmin(): User | Error {
-    if (this.isAdmin()) {
-      return new Error('This user is already an admin')
-    }
-    return new User({ ...this, roles: [...this.roles, 'admin'] })
-  }
 }
 
 export { User }
