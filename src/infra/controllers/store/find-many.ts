@@ -1,13 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { PrismaStoreRepository } from '@/infra/repositories/store/prisma.js'
-import { FindMany } from '@/core/use-cases/store/find-many.js'
-import { PrismaCityRepository } from '@/infra/repositories/city/prisma.js'
-
-const storeRepository = new PrismaStoreRepository()
-const cityRepository = new PrismaCityRepository()
-const findMany = new FindMany(storeRepository, cityRepository)
+import { findStores } from '@/infra/queries/store/find-many.js'
 
 async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
@@ -47,8 +41,8 @@ async function Controller(fastify: FastifyInstance) {
     },
     async handler(request, replay) {
       const page = request.query.page
-      const result = await findMany.exec(page)
-      return replay.send(result)
+      const result = await findStores(page)
+      return replay.header('x-has-more', result.hasMore).send(result.data)
     },
   })
 }

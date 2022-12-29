@@ -1,16 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { FindOne } from '@/core/use-cases/store/find-one.js'
-import { PrismaStoreRepository } from '@/infra/repositories/store/prisma.js'
 import { isFailure } from '@/utils/either.js'
-import { PrismaCityRepository } from '@/infra/repositories/city/prisma.js'
-import { PrismaProductRepository } from '@/infra/repositories/product/prisma.js'
-
-const storeRepository = new PrismaStoreRepository()
-const cityRepository = new PrismaCityRepository()
-const productRepository = new PrismaProductRepository()
-const findOne = new FindOne(storeRepository, cityRepository, productRepository)
+import { findStore } from '@/infra/queries/store/find-one.js'
 
 async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
@@ -74,11 +66,13 @@ async function Controller(fastify: FastifyInstance) {
     },
     async handler(request, replay) {
       const storeId = request.params.store_id
-      const result = await findOne.exec(storeId)
+      const result = await findStore(storeId)
       if (isFailure(result)) {
         return replay.code(400).send({ message: result.failure.message })
       }
-      return replay.send(result.success)
+      return replay
+        .header('x-has-more', result.success.products.hasMore)
+        .send({ ...result.success, products: result.success.products.data })
     },
   })
 }
