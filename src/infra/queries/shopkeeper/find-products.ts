@@ -1,9 +1,9 @@
 import { Prisma } from '@prisma/client'
-import { prisma } from '@/infra/libs/prisma.js'
 import { IGuardianProvider } from '@/core/providers/guardian.js'
 import { failure, isFailure, success } from '@/utils/either.js'
+import { prisma } from '@/infra/libs/prisma.js'
 
-export class FindStores {
+export class FindProducts {
   private readonly guardianProvider: IGuardianProvider
 
   public constructor(guardianProvider: IGuardianProvider) {
@@ -17,35 +17,45 @@ export class FindStores {
     }
     const limit = 10
     const offset = limit * (page - 1)
-    const where: Prisma.StoreWhereInput = {
-      owner_id: user.success.id,
+    const where: Prisma.ProductWhereInput = {
+      store: {
+        owner_id: user.success.id,
+      },
     }
-    const orderBy: Prisma.StoreOrderByWithRelationInput = {
+    const orderBy: Prisma.ProductOrderByWithRelationInput = {
       created_at: 'desc',
     }
-    const stores = await prisma.store.findMany({
+    const products = await prisma.product.findMany({
       where: where,
       orderBy: orderBy,
       take: limit,
       skip: offset,
       include: {
-        city: true,
+        store: {
+          include: {
+            city: true,
+          },
+        },
       },
     })
-    const hasMore = await prisma.store.count({
+    const hasMore = await prisma.product.count({
       where: where,
       orderBy: orderBy,
       take: limit,
       skip: limit * page,
     })
     return success({
-      data: stores.map(store => ({
-        id: store.id,
-        status: store.status,
-        city: {
-          id: store.city.id,
-          name: store.city.name,
-          initials: store.city.initials,
+      data: products.map(product => ({
+        id: product.id,
+        description: product.description,
+        store: {
+          id: product.store.id,
+          status: product.store.status,
+          city: {
+            id: product.store.city.id,
+            name: product.store.city.name,
+            initials: product.store.city.initials,
+          },
         },
       })),
       hasMore: Boolean(hasMore),
