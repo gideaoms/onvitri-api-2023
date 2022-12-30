@@ -3,4 +3,5 @@ import { Either } from '@/utils/either.js'
 
 export type IUserRepository = {
   findByEmail(email: string): Promise<Either<Error, User>>
+  findById(userId: string): Promise<Either<Error, User>>
 }
