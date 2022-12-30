@@ -1,4 +1,4 @@
-class City {
+export class City {
   public readonly id: string
   public readonly name: string
   public readonly initials: string
@@ -9,5 +9,3 @@ class City {
     this.initials = city.initials
   }
 }
-
-export { City }

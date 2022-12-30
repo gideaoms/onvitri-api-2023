@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { findProducts } from '@/infra/queries/product/find-products.js'
+import { FindProducts } from '@/infra/queries/find-products.js'
+
+const findProducts = new FindProducts()
 
 export default async function Product(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
@@ -56,7 +58,7 @@ export default async function Product(fastify: FastifyInstance) {
     },
     async handler(request, replay) {
       const page = request.query.page
-      const result = await findProducts(page)
+      const result = await findProducts.exec(page)
       return replay.header('x-has-more', result.hasMore).send(result.data)
     },
   })

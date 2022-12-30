@@ -1,9 +1,11 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { findStores } from '@/infra/queries/store/find-stores.js'
+import { FindStores } from '@/infra/queries/find-stores.js'
 
-async function Controller(fastify: FastifyInstance) {
+const findStores = new FindStores()
+
+export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
     url: '/stores',
     method: 'GET',
@@ -37,10 +39,8 @@ async function Controller(fastify: FastifyInstance) {
     },
     async handler(request, replay) {
       const page = request.query.page
-      const result = await findStores(page)
+      const result = await findStores.exec(page)
       return replay.header('x-has-more', result.hasMore).send(result.data)
     },
   })
 }
-
-export default Controller

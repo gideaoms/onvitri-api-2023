@@ -1,4 +1,4 @@
-class Product {
+export class Product {
   public readonly id: string
   public readonly description: string
 
@@ -7,5 +7,3 @@ class Product {
     this.description = product.description
   }
 }
-
-export { Product }

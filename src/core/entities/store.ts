@@ -1,8 +1,8 @@
-declare namespace Store {
+export declare namespace Store {
   type Status = 'active' | 'inactive'
 }
 
-class Store {
+export class Store {
   public readonly id: string
   public readonly cityId: string
   public readonly status: Store.Status
@@ -13,5 +13,3 @@ class Store {
     this.status = store.status
   }
 }
-
-export { Store }

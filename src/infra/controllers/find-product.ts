@@ -1,10 +1,12 @@
 import { FastifyInstance } from 'fastify'
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
-import { findProduct } from '@/infra/queries/product/find-product.js'
+import { FindProduct } from '@/infra/queries/find-product.js'
 import { isFailure } from '@/utils/either.js'
 
-async function Controller(fastify: FastifyInstance) {
+const findProduct = new FindProduct()
+
+export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
     url: '/products/:product_id',
     method: 'GET',
@@ -55,7 +57,7 @@ async function Controller(fastify: FastifyInstance) {
     },
     async handler(request, replay) {
       const productId = request.params.product_id
-      const result = await findProduct(productId)
+      const result = await findProduct.exec(productId)
       if (isFailure(result)) {
         return replay.code(400).send({ message: result.failure.message })
       }
@@ -63,5 +65,3 @@ async function Controller(fastify: FastifyInstance) {
     },
   })
 }
-
-export default Controller

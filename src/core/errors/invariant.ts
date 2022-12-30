@@ -1,3 +1,1 @@
-class InvariantError extends Error {}
-
-export { InvariantError }
+export class InvariantError extends Error {}
