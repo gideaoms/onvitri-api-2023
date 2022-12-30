@@ -1,18 +1,25 @@
-declare namespace User {
-  type Status = 'I' | 'A'
-  type Role = 'admin' | 'common'
+export declare namespace User {
+  type Status = 'active' | 'inactive'
 }
 
-class User {
+export class User {
+  public readonly id: string
   public readonly name: string
+  public readonly email: string
+  public readonly validationCode: string | null
   public readonly status: User.Status
-  public readonly roles: User.Role[]
 
-  public constructor(user: { name: string; status: User.Status; roles: User.Role[] }) {
+  public constructor(user: {
+    id: string
+    name: string
+    email: string
+    validationCode: string | null
+    status: User.Status
+  }) {
+    this.id = user.id
     this.name = user.name
+    this.email = user.email
+    this.validationCode = user.validationCode
     this.status = user.status
-    this.roles = user.roles
   }
 }
-
-export { User }
