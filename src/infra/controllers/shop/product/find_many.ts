@@ -13,7 +13,7 @@ const findProducts = new Services.Product.FindMany.Query(guardianProvider)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-    url: '/products',
+    url: '/shop/products',
     method: 'GET',
     schema: {
       headers: Type.Object({

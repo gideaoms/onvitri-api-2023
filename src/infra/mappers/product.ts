@@ -21,7 +21,7 @@ const ImageSchema = Type.Array(
 
 export function toModel(record: Product) {
   if (!Value.Check(ImageSchema, record.images)) {
-    throw new Error('Invalid images field')
+    throw new Error('Invalid images field', { cause: record.images })
   }
   return new Models.Product.Model({
     id: record.id,
@@ -40,7 +40,7 @@ export function toModel(record: Product) {
 
 export function toObject(record: Product) {
   if (!Value.Check(ImageSchema, record.images)) {
-    throw new Error('Invalid images field')
+    throw new Error('Invalid images field', { cause: record.images })
   }
   return {
     id: record.id,

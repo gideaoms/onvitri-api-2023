@@ -14,7 +14,7 @@ const updateProduct = new Services.UpdateOne.Service(guardianProvider, productRe
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-    url: '/products/:product_id',
+    url: '/shop/products/:product_id',
     method: 'PUT',
     schema: {
       headers: Type.Object({

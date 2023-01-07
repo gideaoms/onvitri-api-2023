@@ -31,5 +31,5 @@ app.register(multipart)
 app.register(autoload, {
   dir: path.join(__dirname, 'infra', 'controllers'),
   options: { prefix: '/v1' },
-  dirNameRoutePrefix: true,
+  dirNameRoutePrefix: false,
 })

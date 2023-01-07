@@ -32,7 +32,7 @@ export class Query {
         ...Mappers.Store.toObject(store),
         city: Mappers.City.toObject(store.city),
       })),
-      hasMore: hasMore,
+      hasMore: Boolean(hasMore),
     }
   }
 }

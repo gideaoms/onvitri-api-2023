@@ -6,7 +6,7 @@ import * as Either from '@/utils/either.js'
 
 const findProductsByStore = new Services.Product.FindManyByStore.Query()
 
-export async function Controller(fastify: FastifyInstance) {
+export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
     url: '/stores/:store_id/products',
     method: 'GET',

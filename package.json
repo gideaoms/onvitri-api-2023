@@ -5,9 +5,9 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
+    "start": "node dist/server.js",
+    "start:dev": "npx tsx watch src/server.ts",
     "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
-    "server": "node dist/server.js",
-    "server:dev": "npx tsx watch src/server.ts",
     "lint": "npx eslint",
     "test": "npx vitest --run",
     "prepare": "npx husky install"
