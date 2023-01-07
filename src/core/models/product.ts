@@ -32,6 +32,6 @@ export class Model {
   }
 
   hasMoreImagesThanAllowed() {
-    return this.images.length <= 10
+    return this.images.length >= 10
   }
 }

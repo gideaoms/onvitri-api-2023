@@ -31,26 +31,14 @@ export class Repository implements Repositories.Product.Repository {
 
   async create(product: Models.Product.Model) {
     const created = await orm.product.create({
-      data: {
-        id: product.id,
-        store_id: product.storeId,
-        description: product.description,
-        status: product.status,
-        images: [],
-      },
+      data: Mappers.Product.fromModel(product),
     })
     return Mappers.Product.toModel(created)
   }
 
   async update(product: Models.Product.Model) {
     const updated = await orm.product.update({
-      data: {
-        id: product.id,
-        store_id: product.storeId,
-        description: product.description,
-        status: product.status,
-        images: [],
-      },
+      data: Mappers.Product.fromModel(product),
       where: {
         id: product.id,
       },

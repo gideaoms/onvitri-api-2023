@@ -9,6 +9,17 @@ type Body = {
   storeId: string
   description: string
   status: Models.Product.Status
+  images: {
+    id: string
+    variants: {
+      url: string
+      name: string
+      ext: string
+      width: number
+      height: number
+      size: 'sm' | 'md'
+    }[]
+  }[]
 }
 
 export class Service {
@@ -32,7 +43,9 @@ export class Service {
       storeId: body.storeId,
       description: body.description,
       status: body.status,
-      images: [],
+      images: body.images.map(
+        image => new Models.Image.Model({ id: image.id, variants: image.variants }),
+      ),
     })
     if (product.isActive() && !product.hasImages()) {
       return Either.failure(

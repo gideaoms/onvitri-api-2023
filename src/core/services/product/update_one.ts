@@ -9,6 +9,17 @@ type Body = {
   productId: string
   description: string
   status: Models.Product.Status
+  images: {
+    id: string
+    variants: {
+      url: string
+      name: string
+      ext: string
+      width: number
+      height: number
+      size: 'sm' | 'md'
+    }[]
+  }[]
 }
 
 export class Service {
@@ -30,12 +41,14 @@ export class Service {
       id: found.success.id,
       storeId: found.success.storeId,
       description: body.description,
-      images: found.success.images,
+      images: body.images.map(
+        image => new Models.Image.Model({ id: image.id, variants: image.variants }),
+      ),
       status: body.status,
     })
     if (product.isActive() && !product.hasImages()) {
       return Either.failure(
-        new Errors.BadRequest.Error('You cannot save a product without an image'),
+        new Errors.BadRequest.Error('You cannot publish a product without an image'),
       )
     }
     if (product.isActive() && product.hasMoreImagesThanAllowed()) {

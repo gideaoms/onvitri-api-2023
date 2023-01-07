@@ -29,7 +29,7 @@ export default async function Controller(fastify: FastifyInstance) {
         store_id: Type.String({ format: 'uuid' }),
         description: Type.String({ minLength: 1 }),
         status: Type.Enum({ active: 'active' as const, inactive: 'inactive' as const }),
-        pictures: Type.Array(
+        images: Type.Array(
           Type.Object({
             id: Type.String({ format: 'uuid' }),
             variants: Type.Array(
@@ -52,7 +52,7 @@ export default async function Controller(fastify: FastifyInstance) {
         description: request.body.description,
         status: request.body.status,
         storeId: request.body.store_id,
-        urlImage: '',
+        images: request.body.images,
       }
       const result = await createProduct.exec(body, token)
       if (Either.isFailure(result)) {

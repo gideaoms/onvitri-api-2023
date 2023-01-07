@@ -49,6 +49,7 @@ export default async function Controller(fastify: FastifyInstance) {
         productId: request.params.product_id,
         description: request.body.description,
         status: request.body.status,
+        images: request.body.images,
       }
       const result = await updateProduct.exec(body, token)
       if (Either.isFailure(result)) {

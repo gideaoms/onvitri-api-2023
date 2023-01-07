@@ -49,3 +49,23 @@ export function toObject(record: Product) {
     images: record.images,
   }
 }
+
+export function fromModel(model: Models.Product.Model) {
+  return {
+    id: model.id,
+    store_id: model.storeId,
+    description: model.description,
+    status: model.status,
+    images: model.images.map(image => ({
+      id: image.id,
+      variants: image.variants.map(variant => ({
+        url: variant.url,
+        name: variant.name,
+        ext: variant.ext,
+        width: variant.width,
+        height: variant.height,
+        size: variant.size,
+      })),
+    })),
+  }
+}
