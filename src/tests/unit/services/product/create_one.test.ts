@@ -7,7 +7,7 @@ import * as Errors from '@/core/errors/mod.js'
 import * as Models from '@/core/models/mod.js'
 
 describe('Create product', () => {
-  it('should return an error: unauthenticated', async () => {
+  it('should return an error when token is invalid', async () => {
     const storeRepository = new Repositories.Store.Repository()
     const guardianProvider = new Providers.Guardian.Provider()
     const productRepository = new Repositories.Product.Repository()
@@ -44,7 +44,7 @@ describe('Create product', () => {
     expect(result.failure).toStrictEqual(new Errors.Unauthorized.Error('Unauthorized'))
   })
 
-  it('should return an error: store not found', async () => {
+  it('should return an error when store does not exist', async () => {
     const storeRepository = new Repositories.Store.Repository()
     const guardianProvider = new Providers.Guardian.Provider()
     const productRepository = new Repositories.Product.Repository()
