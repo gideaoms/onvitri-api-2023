@@ -3,7 +3,6 @@ import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
 import * as Either from '@/utils/either.js'
 import * as Queries from '@/infra/queries/mod.js'
-import * as Mappers from '@/infra/mappers/mod.js'
 
 const findStore = new Queries.Store.FindOne.Query()
 
