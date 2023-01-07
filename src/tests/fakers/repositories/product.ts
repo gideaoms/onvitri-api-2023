@@ -1,0 +1,40 @@
+import * as Repositories from '@/core/repositories/mod.js'
+import * as Models from '@/core/models/mod.js'
+import * as Either from '@/utils/either.js'
+import * as Errors from '@/core/errors/mod.js'
+
+export class Repository implements Repositories.Product.Repository {
+  private readonly _products: Models.Product.Model[] = []
+
+  async findOne(productId: string) {
+    const product = this._products.find(product => product.id === productId)
+    if (!product) {
+      return Either.failure(new Errors.NotFound.Error('Product not found'))
+    }
+    return Either.success(
+      new Models.Product.Model({
+        id: '123',
+        storeId: '123',
+        description: 'Any description',
+        status: 'active',
+        images: [],
+      }),
+    )
+  }
+
+  async remove(product: Models.Product.Model) {
+    const index = this._products.findIndex(current => current.id === product.id)
+    this._products.slice(index, 1)
+  }
+
+  async create(product: Models.Product.Model) {
+    this._products.push(Object.assign(product, { id: String(this._products.length + 1) }))
+    return product
+  }
+
+  async update(product: Models.Product.Model) {
+    const index = this._products.findIndex(current => current.id === product.id)
+    this._products[index] = product
+    return product
+  }
+}
