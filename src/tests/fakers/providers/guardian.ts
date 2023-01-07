@@ -5,8 +5,7 @@ import * as Models from '@/core/models/mod.js'
 
 export class Provider implements Providers.Guardian.Provider {
   async passThrough(token: string) {
-    const validToken = 'valid_token'
-    const isValid = validToken === token
+    const isValid = token === 'valid_token'
     if (!isValid) {
       return Either.failure(new Errors.Unauthorized.Error('Unauthorized'))
     }

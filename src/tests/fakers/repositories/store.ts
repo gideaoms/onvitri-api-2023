@@ -15,7 +15,8 @@ export class Repository implements Repositories.Store.Repository {
   }
 
   async create(store: Models.Store.Model) {
-    this._stores.push(Object.assign(store, { id: String(this._stores.length + 1) }))
-    return store
+    const newStore = Object.assign(store, { id: String(this._stores.length + 1) })
+    this._stores.push(newStore)
+    return newStore
   }
 }

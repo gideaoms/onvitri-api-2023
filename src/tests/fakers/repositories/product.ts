@@ -28,8 +28,9 @@ export class Repository implements Repositories.Product.Repository {
   }
 
   async create(product: Models.Product.Model) {
-    this._products.push(Object.assign(product, { id: String(this._products.length + 1) }))
-    return product
+    const newProduct = Object.assign(product, { id: String(this._products.length + 1) })
+    this._products.push(newProduct)
+    return newProduct
   }
 
   async update(product: Models.Product.Model) {
