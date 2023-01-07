@@ -1,1 +1,1 @@
-export class NotFoundError extends Error {}
+export class Error extends globalThis.Error {}

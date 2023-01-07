@@ -1,22 +1,22 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { ITokenProvider } from '@/core/providers/token.js'
-import { Config } from '@/config.js'
-import { Either, failure, success } from '@/utils/either.js'
-import { UnauthorizedError } from '@/core/errors/unauthorized.js'
+import * as Config from '@/config.js'
+import * as Providers from '@/core/providers/mod.js'
+import * as Either from '@/utils/either.js'
+import * as Errors from '@/core/errors/mod.js'
 
-export class TokenProvider implements ITokenProvider {
-  public generate(sub: string) {
+export class Provider implements Providers.Token.Provider {
+  generate(sub: string) {
     return jsonwebtoken.sign({ sub }, Config.TOKEN_SECRET, {
       expiresIn: Config.TOKEN_EXPIRES_IN,
     })
   }
 
-  public verify(token: string): Either<Error, string> {
+  verify(token: string) {
     try {
       const decoded = jsonwebtoken.verify(token, Config.TOKEN_SECRET)
-      return success(String(decoded.sub))
+      return Either.success(String(decoded.sub))
     } catch {
-      return failure(new UnauthorizedError('Invalid token'))
+      return Either.failure(new Errors.Unauthorized.Error('Invalid token'))
     }
   }
 }

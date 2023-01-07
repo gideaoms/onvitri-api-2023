@@ -1,7 +1,7 @@
-import { InvariantError } from '@/core/errors/invariant.js'
+import * as Errors from '@/core/errors/mod.js'
 
-function invariant(condition: unknown): asserts condition {
-  if (!condition) throw new InvariantError()
+export function invariant(condition: unknown): asserts condition {
+  if (!condition) {
+    throw new Errors.Invariant.Error()
+  }
 }
-
-export { invariant }

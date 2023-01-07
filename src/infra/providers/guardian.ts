@@ -1,38 +1,36 @@
-import { User } from '@/core/entities/user.js'
-import { UnauthorizedError } from '@/core/errors/unauthorized.js'
-import { IGuardianProvider } from '@/core/providers/guardian.js'
-import { ITokenProvider } from '@/core/providers/token.js'
-import { IUserRepository } from '@/core/repositories/user.js'
-import { failure, isFailure, success } from '@/utils/either.js'
+import * as Models from '@/core/models/mod.js'
+import * as Errors from '@/core/errors/mod.js'
+import * as Providers from '@/core/providers/mod.js'
+import * as Repositories from '@/core/repositories/mod.js'
+import * as Either from '@/utils/either.js'
 
-export class GuardianProvider implements IGuardianProvider {
-  private readonly tokenProvider: ITokenProvider
-  private readonly userRepository: IUserRepository
+export class Provider implements Providers.Guardian.Provider {
+  constructor(
+    private readonly _tokenProvider: Providers.Token.Provider,
+    private readonly _userRepository: Repositories.User.Repository,
+  ) {}
 
-  public constructor(tokenProvider: ITokenProvider, userRepository: IUserRepository) {
-    this.tokenProvider = tokenProvider
-    this.userRepository = userRepository
-  }
-
-  public async passThrough(token: string) {
+  async passThrough(token: string) {
     if (!token) {
-      return failure(new UnauthorizedError('Unauthorized'))
+      return Either.failure(new Errors.Unauthorized.Error('Unauthorized'))
     }
     const [, rawToken] = token.split(' ')
     if (!rawToken) {
-      return failure(new UnauthorizedError('Unauthorized'))
+      return Either.failure(new Errors.Unauthorized.Error('Unauthorized'))
     }
-    const userId = this.tokenProvider.verify(rawToken)
-    if (isFailure(userId)) {
-      return failure(new UnauthorizedError('Unauthorized'))
+    const userId = this._tokenProvider.verify(rawToken)
+    if (Either.isFailure(userId)) {
+      return Either.failure(new Errors.Unauthorized.Error('Unauthorized'))
     }
-    const user = await this.userRepository.findById(userId.success)
-    if (isFailure(user)) {
-      return failure(new UnauthorizedError('Unauthorized'))
+    const user = await this._userRepository.findById(userId.success)
+    if (Either.isFailure(user)) {
+      return Either.failure(new Errors.Unauthorized.Error('Unauthorized'))
     }
     if (!user.success.isActive()) {
-      return failure(new UnauthorizedError('O seu perfil não está ativo na plataforma'))
+      return Either.failure(
+        new Errors.Unauthorized.Error('O seu perfil não está ativo na plataforma'),
+      )
     }
-    return success(new User({ ...user.success, token: rawToken }))
+    return Either.success(new Models.User.Model({ ...user.success, token: rawToken }))
   }
 }

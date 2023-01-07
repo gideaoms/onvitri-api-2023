@@ -1,49 +1,31 @@
-import { User } from '@/core/entities/user.js'
-import { NotFoundError } from '@/core/errors/not-found.js'
-import { IUserRepository } from '@/core/repositories/user.js'
-import { prisma } from '@/infra/libs/prisma.js'
-import { Either, failure, success } from '@/utils/either.js'
+import orm from '@/infra/libs/prisma.js'
+import * as Errors from '@/core/errors/mod.js'
+import * as Repositories from '@/core/repositories/mod.js'
+import * as Either from '@/utils/either.js'
+import * as Mappers from '@/infra/mappers/mod.js'
 
-export class UserRepository implements IUserRepository {
-  public async findByEmail(email: string) {
-    const user = await prisma.user.findUnique({
+export class Repository implements Repositories.User.Repository {
+  async findByEmail(email: string) {
+    const user = await orm.user.findUnique({
       where: {
         email: email,
       },
     })
     if (!user) {
-      return failure(new NotFoundError('User not found'))
+      return Either.failure(new Errors.NotFound.Error('User not found'))
     }
-    return success(
-      new User({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        validationCode: user.validation_code,
-        status: user.status,
-        token: '',
-      }),
-    )
+    return Either.success(Mappers.User.toModel(user))
   }
 
-  public async findById(userId: string) {
-    const user = await prisma.user.findUnique({
+  async findById(userId: string) {
+    const user = await orm.user.findUnique({
       where: {
         id: userId,
       },
     })
     if (!user) {
-      return failure(new NotFoundError('User not found'))
+      return Either.failure(new Errors.NotFound.Error('User not found'))
     }
-    return success(
-      new User({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        validationCode: user.validation_code,
-        status: user.status,
-        token: '',
-      }),
-    )
+    return Either.success(Mappers.User.toModel(user))
   }
 }

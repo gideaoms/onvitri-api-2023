@@ -1,19 +1,19 @@
-import { Store } from '@/core/entities/store.js'
-import { NotFoundError } from '@/core/errors/not-found.js'
-import { IStoreRepository } from '@/core/repositories/store.js'
-import { prisma } from '@/infra/libs/prisma.js'
-import { failure, success } from '@/utils/either.js'
+import orm from '@/infra/libs/prisma.js'
+import * as Errors from '@/core/errors/mod.js'
+import * as Repositories from '@/core/repositories/mod.js'
+import * as Either from '@/utils/either.js'
+import * as Mappers from '@/infra/mappers/mod.js'
 
-export class StoreRepository implements IStoreRepository {
-  public async findOne(storeId: string) {
-    const store = await prisma.store.findUnique({
+export class Repository implements Repositories.Store.Repository {
+  async findOne(storeId: string) {
+    const store = await orm.store.findUnique({
       where: {
         id: storeId,
       },
     })
     if (!store) {
-      return failure(new NotFoundError('Store not found'))
+      return Either.failure(new Errors.NotFound.Error('Store not found'))
     }
-    return success(new Store({ id: store.id, cityId: store.city_id, status: store.status }))
+    return Either.success(Mappers.Store.toModel(store))
   }
 }

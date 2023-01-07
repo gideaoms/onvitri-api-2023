@@ -1,12 +1,13 @@
-import { Product } from '@/core/entities/product.js'
-import { NotFoundError } from '@/core/errors/not-found.js'
-import { IProductRepository } from '@/core/repositories/product.js'
-import { prisma } from '@/infra/libs/prisma.js'
-import { failure, success } from '@/utils/either.js'
+import orm from '@/infra/libs/prisma.js'
+import * as Models from '@/core/models/mod.js'
+import * as Errors from '@/core/errors/mod.js'
+import * as Repositories from '@/core/repositories/mod.js'
+import * as Either from '@/utils/either.js'
+import * as Mappers from '@/infra/mappers/mod.js'
 
-export class ProductRepository implements IProductRepository {
-  public async findOne(productId: string, ownerId: string) {
-    const product = await prisma.product.findFirst({
+export class Repository implements Repositories.Product.Repository {
+  async findOne(productId: string, ownerId: string) {
+    const product = await orm.product.findFirst({
       where: {
         id: productId,
         store: {
@@ -14,28 +15,22 @@ export class ProductRepository implements IProductRepository {
         },
       },
     })
-    if (!product) return failure(new NotFoundError('Product not found'))
-    return success(
-      new Product({
-        id: product.id,
-        storeId: product.store_id,
-        description: product.description,
-        status: product.status,
-        images: [],
-      }),
-    )
+    if (!product) {
+      return Either.failure(new Errors.NotFound.Error('Product not found'))
+    }
+    return Either.success(Mappers.Product.toModel(product))
   }
 
-  public async remove(product: Product) {
-    await prisma.product.delete({
+  async remove(product: Models.Product.Model) {
+    await orm.product.delete({
       where: {
         id: product.id,
       },
     })
   }
 
-  public async create(product: Product) {
-    const created = await prisma.product.create({
+  async create(product: Models.Product.Model) {
+    const created = await orm.product.create({
       data: {
         id: product.id,
         store_id: product.storeId,
@@ -44,11 +39,11 @@ export class ProductRepository implements IProductRepository {
         images: [],
       },
     })
-    return created.id
+    return Mappers.Product.toModel(created)
   }
 
-  public async update(product: Product) {
-    await prisma.product.update({
+  async update(product: Models.Product.Model) {
+    const updated = await orm.product.update({
       data: {
         id: product.id,
         store_id: product.storeId,
@@ -60,5 +55,6 @@ export class ProductRepository implements IProductRepository {
         id: product.id,
       },
     })
+    return Mappers.Product.toModel(updated)
   }
 }

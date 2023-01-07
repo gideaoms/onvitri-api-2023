@@ -1,1 +1,1 @@
-export class InvariantError extends Error {}
+export class Error extends globalThis.Error {}

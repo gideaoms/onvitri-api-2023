@@ -1,6 +1,6 @@
-import { User } from '@/core/entities/user.js'
+import * as Models from '@/core/models/mod.js'
 import { Either } from '@/utils/either.js'
 
-export type IGuardianProvider = {
-  passThrough(token: string): Promise<Either<Error, User>>
+export type Provider = {
+  passThrough(token: string): Promise<Either<Error, Models.User.Model>>
 }

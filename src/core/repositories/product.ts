@@ -1,9 +1,9 @@
-import { Product } from '@/core/entities/product.js'
+import * as Models from '@/core/models/mod.js'
 import { Either } from '@/utils/either.js'
 
-export type IProductRepository = {
-  findOne(productId: string, ownerId: string): Promise<Either<Error, Product>>
-  remove(product: Product): Promise<void>
-  create(product: Product): Promise<string>
-  update(product: Product): Promise<void>
+export type Repository = {
+  findOne(productId: string, ownerId: string): Promise<Either<Error, Models.Product.Model>>
+  remove(product: Models.Product.Model): Promise<void>
+  create(product: Models.Product.Model): Promise<Models.Product.Model>
+  update(product: Models.Product.Model): Promise<Models.Product.Model>
 }

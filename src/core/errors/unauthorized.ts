@@ -1,1 +1,1 @@
-export class UnauthorizedError extends Error {}
+export class Error extends globalThis.Error {}

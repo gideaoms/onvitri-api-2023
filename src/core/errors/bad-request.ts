@@ -1,1 +1,1 @@
-export class BadRequestError extends Error {}
+export class Error extends globalThis.Error {}
