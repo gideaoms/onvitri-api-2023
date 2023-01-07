@@ -1,9 +1,9 @@
-import { Product } from '@prisma/client'
+import { Prisma, Product } from '@prisma/client'
 import { Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
 import * as Models from '@/core/models/mod.js'
 
-const ImageSchema = Type.Array(
+const schema = Type.Array(
   Type.Object({
     id: Type.String(),
     variants: Type.Array(
@@ -19,16 +19,21 @@ const ImageSchema = Type.Array(
   }),
 )
 
-export function toModel(record: Product) {
-  if (!Value.Check(ImageSchema, record.images)) {
-    throw new Error('Invalid images field', { cause: record.images })
+function toImages(images: Prisma.JsonValue) {
+  if (!Value.Check(schema, images)) {
+    throw new Error('Invalid images field', { cause: images })
   }
+  return images
+}
+
+export function toModel(record: Product) {
+  const images = toImages(record.images)
   return new Models.Product.Model({
     id: record.id,
     storeId: record.store_id,
     description: record.description,
     status: record.status,
-    images: record.images.map(
+    images: images.map(
       image =>
         new Models.Image.Model({
           id: image.id,
@@ -39,14 +44,22 @@ export function toModel(record: Product) {
 }
 
 export function toObject(record: Product) {
-  if (!Value.Check(ImageSchema, record.images)) {
-    throw new Error('Invalid images field', { cause: record.images })
-  }
+  const images = toImages(record.images)
   return {
     id: record.id,
     description: record.description,
     status: record.status,
-    images: record.images,
+    images: images.map(image => ({
+      id: image.id,
+      variants: image.variants.map(variant => ({
+        url: variant.url,
+        name: variant.name,
+        ext: variant.ext,
+        width: variant.width,
+        height: variant.height,
+        size: variant.size,
+      })),
+    })),
   }
 }
 
