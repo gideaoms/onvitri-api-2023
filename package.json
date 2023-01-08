@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "npx tsx watch src/server.ts",
+    "start:dev": "npx prisma generate && npx tsx watch src/server.ts",
     "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
     "lint": "npx eslint",
     "test": "npx vitest --run",
@@ -20,6 +20,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^18.11.17",
+    "@types/sharp": "^0.31.1",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "commitizen": "^4.2.6",
@@ -54,7 +55,10 @@
     "@sentry/node": "^7.28.1",
     "@sentry/tracing": "^7.28.1",
     "@sinclair/typebox": "^0.25.16",
+    "aws-sdk": "^2.1290.0",
+    "date-fns": "^2.29.3",
     "fastify": "^4.10.2",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "sharp": "^0.31.3"
   }
 }
