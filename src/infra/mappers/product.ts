@@ -13,7 +13,7 @@ const schema = Type.Array(
         ext: Type.String(),
         width: Type.Number(),
         height: Type.Number(),
-        size: Type.Enum({ sm: 'sm' as const, md: 'md' as const }),
+        size: Type.Enum({ mini: 'mini' as const, normal: 'normal' as const }),
       }),
     ),
   }),
@@ -37,7 +37,17 @@ export function toModel(record: Product) {
       image =>
         new Models.Image.Model({
           id: image.id,
-          variants: image.variants,
+          variants: image.variants.map(
+            variant =>
+              new Models.Variant.Model({
+                url: variant.url,
+                name: variant.name,
+                ext: variant.ext,
+                width: variant.width,
+                height: variant.height,
+                size: variant.size,
+              }),
+          ),
         }),
     ),
   })

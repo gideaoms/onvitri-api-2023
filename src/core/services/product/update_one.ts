@@ -17,7 +17,7 @@ type Body = {
       ext: string
       width: number
       height: number
-      size: 'sm' | 'md'
+      size: 'mini' | 'normal'
     }[]
   }[]
 }
@@ -42,7 +42,21 @@ export class Service {
       storeId: found.success.storeId,
       description: body.description,
       images: body.images.map(
-        image => new Models.Image.Model({ id: image.id, variants: image.variants }),
+        image =>
+          new Models.Image.Model({
+            id: image.id,
+            variants: image.variants.map(
+              variant =>
+                new Models.Variant.Model({
+                  url: variant.url,
+                  name: variant.name,
+                  ext: variant.ext,
+                  width: variant.width,
+                  height: variant.height,
+                  size: variant.size,
+                }),
+            ),
+          }),
       ),
       status: body.status,
     })

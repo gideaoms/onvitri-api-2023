@@ -1,4 +1,4 @@
-export type Size = 'sm' | 'md'
+export type Size = 'normal' | 'mini'
 
 export class Model {
   readonly url: string

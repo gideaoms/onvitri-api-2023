@@ -34,7 +34,7 @@ export default async function Controller(fastify: FastifyInstance) {
                 url: Type.String({ format: 'uri' }),
                 ext: Type.String(),
                 name: Type.String(),
-                size: Type.Enum({ sm: 'sm' as const, md: 'md' as const }),
+                size: Type.Enum({ mini: 'mini' as const, normal: 'normal' as const }),
                 width: Type.Integer(),
                 height: Type.Integer(),
               }),
