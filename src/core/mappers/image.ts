@@ -10,6 +10,7 @@ export function toObject(model: Models.Image.Model) {
       width: variant.width,
       height: variant.height,
       size: variant.size,
+      bucket: variant.bucket,
     })),
   }
 }

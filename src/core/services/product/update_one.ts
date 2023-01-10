@@ -18,6 +18,7 @@ type Body = {
       width: number
       height: number
       size: 'mini' | 'normal'
+      bucket: string
     }[]
   }[]
 }
@@ -54,6 +55,7 @@ export class Service {
                   width: variant.width,
                   height: variant.height,
                   size: variant.size,
+                  bucket: variant.bucket,
                 }),
             ),
           }),

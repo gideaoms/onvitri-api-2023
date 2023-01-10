@@ -18,6 +18,7 @@ type Body = {
       width: number
       height: number
       size: 'mini' | 'normal'
+      bucket: string
     }[]
   }[]
 }
@@ -56,6 +57,7 @@ export class Service {
                   width: variant.width,
                   height: variant.height,
                   size: variant.size,
+                  bucket: variant.bucket,
                 }),
             ),
           }),
@@ -63,7 +65,7 @@ export class Service {
     })
     if (product.isActive() && !product.hasImages()) {
       return Either.failure(
-        new Errors.BadRequest.Error('You cannot save a product without an image'),
+        new Errors.BadRequest.Error('You cannot publish a product without an image'),
       )
     }
     if (product.isActive() && product.hasMoreImagesThanAllowed()) {

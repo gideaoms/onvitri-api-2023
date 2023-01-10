@@ -10,7 +10,12 @@ const productRepository = new Repositories.Product.Repository()
 const tokenProvider = new Providers.Token.Provider()
 const userRepository = new Repositories.User.Repository()
 const guardianProvider = new Providers.Guardian.Provider(tokenProvider, userRepository)
-const removeProduct = new Services.Product.RemoveOne.Service(productRepository, guardianProvider)
+const storageProvider = new Providers.Storage.Provider()
+const removeProduct = new Services.Product.RemoveOne.Service(
+  productRepository,
+  guardianProvider,
+  storageProvider,
+)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({

@@ -32,6 +32,7 @@ describe('Create product', () => {
               width: 1,
               height: 1,
               size: 'mini' as const,
+              bucket: 'onvitri',
             },
           ],
         },
@@ -69,6 +70,7 @@ describe('Create product', () => {
               width: 1,
               height: 1,
               size: 'mini' as const,
+              bucket: 'onvitri',
             },
           ],
         },
@@ -117,7 +119,7 @@ describe('Create product', () => {
       throw new Error('It should not get here')
     }
     expect(result.failure).toStrictEqual(
-      new Errors.BadRequest.Error('You cannot save a product without an image'),
+      new Errors.BadRequest.Error('You cannot publish a product without an image'),
     )
   })
 
@@ -246,6 +248,7 @@ describe('Create product', () => {
               width: 10,
               height: 10,
               size: 'mini' as const,
+              bucket: 'onvitri',
             },
           ],
         },
@@ -270,6 +273,7 @@ describe('Create product', () => {
               width: 10,
               height: 10,
               size: 'mini',
+              bucket: 'onvitri',
             },
           ],
         },

@@ -6,6 +6,7 @@ export class Service {
   constructor(
     private readonly _productRepository: Repositories.Product.Repository,
     private readonly _guardianProvider: Providers.Guardian.Provider,
+    private readonly _storageProvider: Providers.Storage.Provider,
   ) {}
 
   async exec(productId: string, token: string) {
@@ -18,6 +19,8 @@ export class Service {
       return Either.failure(product.failure)
     }
     await this._productRepository.remove(product.success)
+    const variants = product.success.images.flatMap(image => image.variants)
+    await Promise.all(variants.map(variant => this._storageProvider.remove(variant)))
     return Either.success(null)
   }
 }

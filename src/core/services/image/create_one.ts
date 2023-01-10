@@ -13,30 +13,31 @@ export class Service {
     private readonly _guardianProvider: Providers.Guardian.Provider,
   ) {}
 
-  async exec(readable: Readable, token: string) {
+  async exec(normalReadableVariant: Readable, token: string) {
     const user = await this._guardianProvider.passThrough(token)
     if (Either.isFailure(user)) {
       return Either.failure(user.failure)
     }
-    const normalDriveImage = await this._driveProvider.create({
-      readable: readable,
+    const normalDriveVariant = await this._driveProvider.create({
+      readable: normalReadableVariant,
       width: 1000,
       size: 'normal',
     })
-    const normalStorageImage = await this._storageProvider.create(normalDriveImage)
-    const miniDriveImage = await this._driveProvider.create({
-      readable: fs.createReadStream(normalDriveImage.url),
+    const normalStorageVariant = await this._storageProvider.create(normalDriveVariant)
+    const miniReadableVariant = fs.createReadStream(normalDriveVariant.url)
+    const miniDriveVariant = await this._driveProvider.create({
+      readable: miniReadableVariant,
       width: 200,
       height: 200,
       size: 'mini',
     })
-    const miniStorageImage = await this._storageProvider.create(miniDriveImage)
+    const miniStorageVariant = await this._storageProvider.create(miniDriveVariant)
     const image = new Models.Image.Model({
       id: crypto.randomUUID(),
-      variants: [normalStorageImage, miniStorageImage],
+      variants: [normalStorageVariant, miniStorageVariant],
     })
-    await fs.promises.unlink(normalDriveImage.url)
-    await fs.promises.unlink(miniDriveImage.url)
+    await fs.promises.unlink(normalDriveVariant.url)
+    await fs.promises.unlink(miniDriveVariant.url)
     return Either.success(Mappers.Image.toObject(image))
   }
 }

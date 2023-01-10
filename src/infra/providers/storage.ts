@@ -17,9 +17,10 @@ const s3 = new aws.S3({
 export class Provider implements Providers.Storage.Provider {
   async create(variant: Models.Variant.Model) {
     const folder = format(new Date(), 'yyyy-MM-dd')
+    const bucket = `${Config.AWS_S3_NAME}/${folder}`
     await s3
       .putObject({
-        Bucket: `${Config.AWS_S3_NAME}/${folder}`,
+        Bucket: bucket,
         Key: variant.name,
         ACL: 'public-read',
         Body: fs.createReadStream(variant.url),
@@ -33,6 +34,16 @@ export class Provider implements Providers.Storage.Provider {
       width: variant.width,
       height: variant.height,
       size: variant.size,
+      bucket: bucket,
     })
+  }
+
+  async remove(variant: Models.Variant.Model) {
+    await s3
+      .deleteObject({
+        Bucket: variant.bucket,
+        Key: variant.name,
+      })
+      .promise()
   }
 }

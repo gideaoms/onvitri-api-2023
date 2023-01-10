@@ -37,6 +37,7 @@ export class Provider implements Providers.Drive.Provider {
       width: metadata.width,
       height: metadata.height,
       size: args.size,
+      bucket: '',
     })
   }
 }
