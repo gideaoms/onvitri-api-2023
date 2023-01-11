@@ -19,7 +19,7 @@ const createProduct = new Services.Product.CreateOne.Service(
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-    url: '/shop/products',
+    url: '/shopkeeper/products',
     method: 'POST',
     schema: {
       headers: Type.Object({
