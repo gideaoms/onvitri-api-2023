@@ -1,5 +1,5 @@
+import errors from 'http-errors'
 import orm from '@/infra/libs/prisma.js'
-import * as Errors from '@/core/errors/mod.js'
 import * as Providers from '@/core/providers/mod.js'
 import * as Either from '@/utils/either.js'
 import * as Mappers from '@/infra/mappers/mod.js'
@@ -28,7 +28,7 @@ export class Query {
       },
     })
     if (!product) {
-      return Either.failure(new Errors.NotFound.Error('Product not found'))
+      return Either.failure(new errors.NotFound('Product not found'))
     }
     return Either.success({
       ...Mappers.Product.toObject(product),

@@ -38,7 +38,7 @@ services:
     volumes:
       - onvitri_postgres:/bitnami/postgresql
     healthcheck:
-      test: pg_isready --username $DATABASE_NAME
+      test: pg_isready --username $DATABASE_USER
       interval: 2s
       timeout: 2s
       retries: 30

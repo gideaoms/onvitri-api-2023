@@ -1,7 +1,7 @@
+import errors from 'http-errors'
 import * as Repositories from '@/core/repositories/mod.js'
 import * as Models from '@/core/models/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 
 export class Repository implements Repositories.Store.Repository {
   private readonly _stores: Models.Store.Model[] = []
@@ -9,7 +9,7 @@ export class Repository implements Repositories.Store.Repository {
   async findOne(storeId: string) {
     const store = this._stores.find(store => store.id === storeId)
     if (!store) {
-      return Either.failure(new Errors.NotFound.Error('Store not found'))
+      return Either.failure(new errors.NotFound('Store not found'))
     }
     return Either.success(store)
   }

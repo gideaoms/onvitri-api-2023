@@ -1,7 +1,7 @@
+import errors from 'http-errors'
 import * as Repositories from '@/core/repositories/mod.js'
 import * as Models from '@/core/models/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 
 export class Repository implements Repositories.Product.Repository {
   private readonly _products: Models.Product.Model[] = []
@@ -9,7 +9,7 @@ export class Repository implements Repositories.Product.Repository {
   async findOne(productId: string) {
     const product = this._products.find(product => product.id === productId)
     if (!product) {
-      return Either.failure(new Errors.NotFound.Error('Product not found'))
+      return Either.failure(new errors.NotFound('Product not found'))
     }
     return Either.success(
       new Models.Product.Model({

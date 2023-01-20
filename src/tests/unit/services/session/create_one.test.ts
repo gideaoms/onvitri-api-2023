@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
+import errors from 'http-errors'
 import * as Services from '@/core/services/mod.js'
 import * as Repositories from '@/tests/fakers/repositories/mod.js'
 import * as Providers from '@/tests/fakers/providers/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 import * as Models from '@/core/models/mod.js'
 
 describe('Create session', () => {
@@ -17,9 +17,7 @@ describe('Create session', () => {
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(
-      new Errors.BadRequest.Error('Email e/ou código incorretos'),
-    )
+    expect(result.failure).toStrictEqual(new errors.BadRequest('Email e/ou código incorretos'))
   })
 
   it('should return an error when code is wrong', async () => {
@@ -41,9 +39,7 @@ describe('Create session', () => {
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(
-      new Errors.BadRequest.Error('Email e/ou código incorretos'),
-    )
+    expect(result.failure).toStrictEqual(new errors.BadRequest('Email e/ou código incorretos'))
   })
 
   it('should successfully create a new session', async () => {

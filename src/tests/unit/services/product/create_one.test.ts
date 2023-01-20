@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
+import errors from 'http-errors'
 import * as Services from '@/core/services/mod.js'
 import * as Repositories from '@/tests/fakers/repositories/mod.js'
 import * as Providers from '@/tests/fakers/providers/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 import * as Models from '@/core/models/mod.js'
 
 describe('Create product', () => {
@@ -42,7 +42,7 @@ describe('Create product', () => {
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(new Errors.Unauthorized.Error('Unauthorized'))
+    expect(result.failure).toStrictEqual(new errors.Unauthorized())
   })
 
   it('should return an error when store does not exist', async () => {
@@ -80,7 +80,7 @@ describe('Create product', () => {
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(new Errors.NotFound.Error('Store not found'))
+    expect(result.failure).toStrictEqual(new errors.NotFound('Store not found'))
   })
 
   it('should return an error when the product is active and there is no image', async () => {
@@ -119,7 +119,7 @@ describe('Create product', () => {
       throw new Error('It should not get here')
     }
     expect(result.failure).toStrictEqual(
-      new Errors.BadRequest.Error('You cannot publish a product without an image'),
+      new errors.BadRequest('You cannot publish a product without an image'),
     )
   })
 
@@ -204,7 +204,7 @@ describe('Create product', () => {
       throw new Error('It should not get here')
     }
     expect(result.failure).toStrictEqual(
-      new Errors.BadRequest.Error('Your product has more images than allowed'),
+      new errors.BadRequest('Your product has more images than allowed'),
     )
   })
 

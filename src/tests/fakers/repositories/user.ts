@@ -1,7 +1,7 @@
+import errors from 'http-errors'
 import * as Repositories from '@/core/repositories/mod.js'
 import * as Models from '@/core/models/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 
 export class Repository implements Repositories.User.Repository {
   private readonly _users: Models.User.Model[] = []
@@ -9,7 +9,7 @@ export class Repository implements Repositories.User.Repository {
   async findByEmail(email: string) {
     const user = this._users.find(user => user.email === email)
     if (!user) {
-      return Either.failure(new Errors.NotFound.Error('User not found'))
+      return Either.failure(new errors.NotFound('User not found'))
     }
     return Either.success(user)
   }
@@ -17,7 +17,7 @@ export class Repository implements Repositories.User.Repository {
   async findById(userId: string) {
     const user = this._users.find(user => user.id === userId)
     if (!user) {
-      return Either.failure(new Errors.NotFound.Error('User not found'))
+      return Either.failure(new errors.NotFound('User not found'))
     }
     return Either.success(user)
   }

@@ -1,8 +1,8 @@
 import jsonwebtoken from 'jsonwebtoken'
+import errors from 'http-errors'
 import * as Config from '@/config.js'
 import * as Providers from '@/core/providers/mod.js'
 import * as Either from '@/utils/either.js'
-import * as Errors from '@/core/errors/mod.js'
 
 export class Provider implements Providers.Token.Provider {
   generate(sub: string) {
@@ -16,7 +16,7 @@ export class Provider implements Providers.Token.Provider {
       const decoded = jsonwebtoken.verify(token, Config.TOKEN_SECRET)
       return Either.success(String(decoded.sub))
     } catch {
-      return Either.failure(new Errors.Unauthorized.Error('Invalid token'))
+      return Either.failure(new errors.Unauthorized('Invalid token'))
     }
   }
 }
