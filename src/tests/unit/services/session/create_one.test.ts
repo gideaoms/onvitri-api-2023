@@ -24,7 +24,7 @@ describe('Create session', () => {
     const userRepository = new Repositories.User.Repository()
     const tokenProvider = new Providers.Token.Provider()
     const createSession = new Services.Session.CreateOne.Service(userRepository, tokenProvider)
-    const user = new Models.User.Model({
+    const user = Models.User.build({
       id: 'id',
       name: 'name',
       email: 'valid_mail',
@@ -46,7 +46,7 @@ describe('Create session', () => {
     const userRepository = new Repositories.User.Repository()
     const tokenProvider = new Providers.Token.Provider()
     const createSession = new Services.Session.CreateOne.Service(userRepository, tokenProvider)
-    const user = new Models.User.Model({
+    const user = Models.User.build({
       id: 'id',
       name: 'name',
       email: 'valid_mail',

@@ -13,7 +13,7 @@ export function toModel(record: Store) {
   if (!Value.Check(PhoneSchema, record.phone)) {
     throw new Error('Invalid phone field')
   }
-  return new Models.Store.Model({
+  return Models.Store.build({
     id: record.id,
     cityId: record.city_id,
     fantasyName: record.fantasy_name,

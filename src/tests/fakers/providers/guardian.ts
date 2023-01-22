@@ -10,7 +10,7 @@ export class Provider implements Providers.Guardian.Provider {
       return Either.failure(new errors.Unauthorized())
     }
     return Either.success(
-      new Models.User.Model({
+      Models.User.build({
         id: '123',
         name: 'John Doe',
         email: 'john@mail.com',

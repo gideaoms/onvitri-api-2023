@@ -2,7 +2,7 @@ import { User } from '@prisma/client'
 import * as Models from '@/core/models/mod.js'
 
 export function toModel(record: User) {
-  return new Models.User.Model({
+  return Models.User.build({
     id: record.id,
     email: record.email,
     name: record.name,

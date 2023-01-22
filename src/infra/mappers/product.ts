@@ -1,66 +1,57 @@
-import { Prisma, Product } from '@prisma/client'
-import { Type, Static } from '@sinclair/typebox'
-import { Value } from '@sinclair/typebox/value'
+import { Product } from '@prisma/client'
+import { z } from 'zod'
 import * as Models from '@/core/models/mod.js'
 
-const ImageSchema = Type.Array(
-  Type.Object({
-    id: Type.String(),
-    variants: Type.Array(
-      Type.Object({
-        url: Type.String(),
-        name: Type.String(),
-        ext: Type.String(),
-        width: Type.Number(),
-        height: Type.Number(),
-        size: Type.Enum({ mini: 'mini' as const, normal: 'normal' as const }),
-        bucket: Type.String(),
+const schema = z.array(
+  z.object({
+    id: z.string(),
+    variants: z.array(
+      z.object({
+        url: z.string(),
+        name: z.string(),
+        ext: z.string(),
+        width: z.number(),
+        height: z.number(),
+        size: z.enum(['mini', 'normal']),
+        bucket: z.string(),
       }),
     ),
   }),
 )
 
-function assertImages(images: Prisma.JsonValue): asserts images is Static<typeof ImageSchema> {
-  if (!Value.Check(ImageSchema, images)) {
-    throw new Error('Invalid images field', { cause: images })
-  }
-}
-
 export function toModel(record: Product) {
-  assertImages(record.images)
-  return new Models.Product.Model({
+  const images = schema.parse(record.images)
+  return Models.Product.build({
     id: record.id,
     storeId: record.store_id,
     description: record.description,
     status: record.status,
-    images: record.images.map(
-      image =>
-        new Models.Image.Model({
-          id: image.id,
-          variants: image.variants.map(
-            variant =>
-              new Models.Variant.Model({
-                url: variant.url,
-                name: variant.name,
-                ext: variant.ext,
-                width: variant.width,
-                height: variant.height,
-                size: variant.size,
-                bucket: variant.bucket,
-              }),
-          ),
-        }),
+    images: images.map(image =>
+      Models.Image.build({
+        id: image.id,
+        variants: image.variants.map(variant =>
+          Models.Variant.build({
+            url: variant.url,
+            name: variant.name,
+            ext: variant.ext,
+            width: variant.width,
+            height: variant.height,
+            size: variant.size,
+            bucket: variant.bucket,
+          }),
+        ),
+      }),
     ),
   })
 }
 
 export function toObject(record: Product) {
-  assertImages(record.images)
+  const images = schema.parse(record.images)
   return {
     id: record.id,
     description: record.description,
     status: record.status,
-    images: record.images.map(image => ({
+    images: images.map(image => ({
       id: image.id,
       variants: image.variants.map(variant => ({
         url: variant.url,

@@ -2,36 +2,26 @@ import * as Image from '@/core/models/image.js'
 
 export type Status = 'active' | 'inactive'
 
-export class Model {
-  readonly id: string
-  readonly storeId: string
-  readonly description: string
-  readonly status: Status
-  readonly images: Image.Model[]
+export type Model = Readonly<{
+  id: string
+  storeId: string
+  description: string
+  status: Status
+  images: Image.Model[]
+}>
 
-  constructor(model: {
-    id: string
-    storeId: string
-    description: string
-    status: Status
-    images: Image.Model[]
-  }) {
-    this.id = model.id
-    this.storeId = model.storeId
-    this.description = model.description
-    this.status = model.status
-    this.images = model.images
-  }
+export function build(model: Model) {
+  return model
+}
 
-  hasImages() {
-    return this.images.length > 0
-  }
+export function hasImages(model: Model) {
+  return model.images.length > 0
+}
 
-  isActive() {
-    return this.status === 'active'
-  }
+export function isActive(model: Model) {
+  return model.status === 'active'
+}
 
-  hasMoreImagesThanAllowed() {
-    return this.images.length >= 10
-  }
+export function hasMoreImagesThanAllowed(model: Model) {
+  return model.images.length >= 10
 }

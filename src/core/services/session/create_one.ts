@@ -22,7 +22,7 @@ export class Service {
       return Either.failure(new errors.BadRequest(message))
     }
     const generatedToken = this._tokenProvider.generate(user.success.id)
-    const userWithToken = new Models.User.Model({ ...user.success, token: generatedToken })
+    const userWithToken = Models.User.build({ ...user.success, token: generatedToken })
     return Either.success(Mappers.User.toObject(userWithToken))
   }
 }

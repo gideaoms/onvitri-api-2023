@@ -27,7 +27,7 @@ export class Provider implements Providers.Storage.Provider {
         ContentType: 'image/webp',
       })
       .promise()
-    return new Models.Variant.Model({
+    return Models.Variant.build({
       url: `https://${Config.AWS_S3_NAME}.${Config.AWS_S3_ENDPOINT}/${folder}/${variant.name}`,
       name: variant.name,
       ext: variant.ext,

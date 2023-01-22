@@ -32,7 +32,7 @@ export class Service {
       size: 'mini',
     })
     const miniStorageVariant = await this._storageProvider.create(miniDriveVariant)
-    const image = new Models.Image.Model({
+    const image = Models.Image.build({
       id: crypto.randomUUID(),
       variants: [normalStorageVariant, miniStorageVariant],
     })

@@ -30,7 +30,7 @@ export class Provider implements Providers.Drive.Provider {
     if (!metadata.width || !metadata.height) {
       throw new Error('Error while getting width and height metadata')
     }
-    return new Models.Variant.Model({
+    return Models.Variant.build({
       url: diskUrl,
       name: name,
       ext: extension,

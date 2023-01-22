@@ -26,9 +26,9 @@ export class Provider implements Providers.Guardian.Provider {
     if (Either.isFailure(user)) {
       return Either.failure(new errors.Unauthorized())
     }
-    if (!user.success.isActive()) {
+    if (!Models.User.isActive(user.success)) {
       return Either.failure(new errors.Unauthorized('Inactivated profile'))
     }
-    return Either.success(new Models.User.Model({ ...user.success, token: rawToken }))
+    return Either.success(Models.User.build({ ...user.success, token: rawToken }))
   }
 }

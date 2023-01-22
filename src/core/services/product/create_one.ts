@@ -9,9 +9,9 @@ type Body = {
   storeId: string
   description: string
   status: Models.Product.Status
-  images: {
+  images: Array<{
     id: string
-    variants: {
+    variants: Array<{
       url: string
       name: string
       ext: string
@@ -19,8 +19,8 @@ type Body = {
       height: number
       size: 'mini' | 'normal'
       bucket: string
-    }[]
-  }[]
+    }>
+  }>
 }
 
 export class Service {
@@ -39,34 +39,32 @@ export class Service {
     if (Either.isFailure(store)) {
       return Either.failure(store.failure)
     }
-    const product = new Models.Product.Model({
+    const product = Models.Product.build({
       id: undefined!,
       storeId: body.storeId,
       description: body.description,
       status: body.status,
-      images: body.images.map(
-        image =>
-          new Models.Image.Model({
-            id: image.id,
-            variants: image.variants.map(
-              variant =>
-                new Models.Variant.Model({
-                  url: variant.url,
-                  name: variant.name,
-                  ext: variant.ext,
-                  width: variant.width,
-                  height: variant.height,
-                  size: variant.size,
-                  bucket: variant.bucket,
-                }),
-            ),
-          }),
+      images: body.images.map(image =>
+        Models.Image.build({
+          id: image.id,
+          variants: image.variants.map(variant =>
+            Models.Variant.build({
+              url: variant.url,
+              name: variant.name,
+              ext: variant.ext,
+              width: variant.width,
+              height: variant.height,
+              size: variant.size,
+              bucket: variant.bucket,
+            }),
+          ),
+        }),
       ),
     })
-    if (product.isActive() && !product.hasImages()) {
+    if (Models.Product.isActive(product) && !Models.Product.hasImages(product)) {
       return Either.failure(new errors.BadRequest('You cannot publish a product without an image'))
     }
-    if (product.isActive() && product.hasMoreImagesThanAllowed()) {
+    if (Models.Product.isActive(product) && Models.Product.hasMoreImagesThanAllowed(product)) {
       return Either.failure(new errors.BadRequest('Your product has more images than allowed'))
     }
     const created = await this._productRepository.create(product)

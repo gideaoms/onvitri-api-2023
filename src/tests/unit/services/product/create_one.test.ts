@@ -92,7 +92,7 @@ describe('Create product', () => {
       guardianProvider,
       productRepository,
     )
-    const store = new Models.Store.Model({
+    const store = Models.Store.build({
       id: '123',
       cityId: '123',
       fantasyName: 'fantasy name',
@@ -132,7 +132,7 @@ describe('Create product', () => {
       guardianProvider,
       productRepository,
     )
-    const store = new Models.Store.Model({
+    const store = Models.Store.build({
       id: '123',
       cityId: '123',
       fantasyName: 'fantasy name',
@@ -217,7 +217,7 @@ describe('Create product', () => {
       guardianProvider,
       productRepository,
     )
-    const store = new Models.Store.Model({
+    const store = Models.Store.build({
       id: '123',
       cityId: '123',
       fantasyName: 'fantasy name',

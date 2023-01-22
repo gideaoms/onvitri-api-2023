@@ -12,7 +12,7 @@ export class Repository implements Repositories.Product.Repository {
       return Either.failure(new errors.NotFound('Product not found'))
     }
     return Either.success(
-      new Models.Product.Model({
+      Models.Product.build({
         id: '123',
         storeId: '123',
         description: 'Any description',
