@@ -9,11 +9,12 @@ import * as Either from '@/utils/either.js'
 const tokenProvider = new Providers.Token.Provider()
 const userRepository = new Repositories.User.Repository()
 const guardianProvider = new Providers.Guardian.Provider(tokenProvider, userRepository)
-const findSession = new Services.Session.FindOne.Service(guardianProvider)
+const storeRepository = new Repositories.Store.Repository()
+const findSession = new Services.Session.FindOne.Service(guardianProvider, storeRepository)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-    url: '/sessions',
+    url: '/shopkeeper/sessions',
     method: 'GET',
     schema: {
       headers: Type.Object({

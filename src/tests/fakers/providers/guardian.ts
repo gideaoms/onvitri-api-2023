@@ -16,7 +16,6 @@ export class Provider implements Providers.Guardian.Provider {
         email: 'john@mail.com',
         status: 'active',
         token: token,
-        validationCode: null,
       }),
     )
   }

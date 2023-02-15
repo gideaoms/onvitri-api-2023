@@ -6,11 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "npx prisma generate && npx tsx watch src/server.ts",
-    "build": "npx tsc && npx tsc-alias && npx copyfiles --up 2 src/email-templates/**/* dist/email-templates",
-    "lint": "npx eslint",
-    "test": "npx vitest --run",
-    "prepare": "npx husky install"
+    "start:dev": "prisma generate && tsx watch src/server.ts",
+    "build": "tsc && tsc-alias && copyfiles --up 2 src/email-templates/**/* dist/email-templates",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "Gideão Silva <gideaoms@gmail.com>",

@@ -12,7 +12,7 @@ const createSession = new Services.Session.CreateOne.Service(userRepository, tok
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-    url: '/sessions',
+    url: '/shopkeeper/sessions',
     method: 'POST',
     schema: {
       body: Type.Object({

@@ -60,11 +60,8 @@ export class Service {
       ),
       status: body.status,
     })
-    if (Models.Product.isActive(product) && !Models.Product.hasImages(product)) {
-      return Either.failure(new errors.BadRequest('You cannot publish a product without an image'))
-    }
-    if (Models.Product.isActive(product) && Models.Product.hasMoreImagesThanAllowed(product)) {
-      return Either.failure(new errors.BadRequest('Your product has more images than allowed'))
+    if (Models.Product.isActive(product) && !Models.Product.hasValidAmountOfImages(product)) {
+      return Either.failure(new errors.BadRequest('O produto precisa ter entre 3 e 10 imagens'))
     }
     const updated = await this._productRepository.update(product)
     return Either.success(Mappers.Product.toObject(updated))

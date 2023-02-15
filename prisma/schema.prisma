@@ -25,15 +25,16 @@ model City {
 }
 
 model User {
-  id              String   @id @default(uuid()) @db.Uuid
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-  name            String
-  email           String   @unique
-  status          Status
-  validation_code String?
+  id               String   @id @default(uuid()) @db.Uuid
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  name             String
+  email            String   @unique
+  status           Status
+  validation_code  String?
+  default_store_id String?
 
-  Store Store[]
+  stores Store[]
 
   @@map("users")
 }

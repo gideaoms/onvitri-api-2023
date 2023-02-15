@@ -14,14 +14,10 @@ export function build(model: Model) {
   return model
 }
 
-export function hasImages(model: Model) {
-  return model.images.length > 0
+export function hasValidAmountOfImages(model: Model) {
+  return model.images.length >= 3 && model.images.length <= 10
 }
 
 export function isActive(model: Model) {
   return model.status === 'active'
-}
-
-export function hasMoreImagesThanAllowed(model: Model) {
-  return model.images.length >= 10
 }

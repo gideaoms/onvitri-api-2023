@@ -7,7 +7,8 @@ export function toModel(record: User) {
     email: record.email,
     name: record.name,
     status: record.status,
-    validationCode: record.validation_code,
+    validationCode: record.validation_code ?? undefined,
+    defaultStoreId: record.default_store_id ?? undefined,
     token: '',
   })
 }
