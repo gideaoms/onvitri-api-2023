@@ -1,38 +1,34 @@
+import { z } from 'zod'
 import { Store } from '@prisma/client'
-import { Type } from '@sinclair/typebox'
-import { Value } from '@sinclair/typebox/value'
 import * as Models from '@/core/models/mod.js'
 
-const PhoneSchema = Type.Object({
-  country_code: Type.String(),
-  area_code: Type.String(),
-  number: Type.String(),
+const schema = z.object({
+  country_code: z.string(),
+  area_code: z.string(),
+  number: z.string(),
 })
 
 export function toModel(record: Store) {
-  if (!Value.Check(PhoneSchema, record.phone)) {
-    throw new Error('Invalid phone field')
-  }
+  const parsed = schema.parse(record.phone)
   return Models.Store.build({
     id: record.id,
     cityId: record.city_id,
+    ownerId: record.owner_id,
     fantasyName: record.fantasy_name,
     neighborhood: record.neighborhood,
     number: record.number,
     status: record.status,
     street: record.street,
     phone: {
-      countryCode: record.phone.country_code,
-      areaCode: record.phone.area_code,
-      number: record.phone.number,
+      countryCode: parsed.country_code,
+      areaCode: parsed.area_code,
+      number: parsed.number,
     },
   })
 }
 
 export function toObject(record: Store) {
-  if (!Value.Check(PhoneSchema, record.phone)) {
-    throw new Error('Invalid phone field')
-  }
+  const parsed = schema.parse(record.phone)
   return {
     id: record.id,
     city_id: record.city_id,
@@ -41,9 +37,9 @@ export function toObject(record: Store) {
     number: record.number,
     neighborhood: record.neighborhood,
     phone: {
-      country_code: record.phone.country_code,
-      area_code: record.phone.area_code,
-      number: record.phone.number,
+      country_code: parsed.country_code,
+      area_code: parsed.area_code,
+      number: parsed.number,
     },
     status: record.status,
   }

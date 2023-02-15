@@ -3,6 +3,7 @@ import orm from '@/infra/libs/prisma.js'
 import * as Repositories from '@/core/repositories/mod.js'
 import * as Either from '@/utils/either.js'
 import * as Mappers from '@/infra/mappers/mod.js'
+import * as Models from '@/core/models/mod.js'
 
 export class Repository implements Repositories.User.Repository {
   async findByEmail(email: string) {
@@ -27,5 +28,15 @@ export class Repository implements Repositories.User.Repository {
       return Either.failure(new errors.NotFound('User not found'))
     }
     return Either.success(Mappers.User.toModel(user))
+  }
+
+  async update(user: Models.User.Model) {
+    const updated = await orm.user.update({
+      data: Mappers.User.fromModel(user),
+      where: {
+        id: user.id,
+      },
+    })
+    return Mappers.User.toModel(updated)
   }
 }

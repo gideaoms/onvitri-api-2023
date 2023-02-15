@@ -12,3 +12,14 @@ export function toModel(record: User) {
     token: '',
   })
 }
+
+export function fromModel(model: Models.User.Model) {
+  return {
+    id: model.id,
+    name: model.name,
+    email: model.email,
+    validation_code: model.validationCode ?? null,
+    status: model.status,
+    default_store_id: model.defaultStoreId ?? null,
+  } satisfies Omit<User, 'created_at' | 'updated_at'>
+}

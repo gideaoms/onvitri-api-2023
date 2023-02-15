@@ -27,4 +27,9 @@ export class Repository implements Repositories.User.Repository {
     this._users.push(newUser)
     return newUser
   }
+
+  async update(userToUpdate: Models.User.Model) {
+    this._users.map(user => (user.id === userToUpdate.id ? userToUpdate : user))
+    return userToUpdate
+  }
 }

@@ -20,13 +20,13 @@ const schema = z.array(
 )
 
 export function toModel(record: Product) {
-  const images = schema.parse(record.images)
+  const parsed = schema.parse(record.images)
   return Models.Product.build({
     id: record.id,
     storeId: record.store_id,
     description: record.description,
     status: record.status,
-    images: images.map(image =>
+    images: parsed.map(image =>
       Models.Image.build({
         id: image.id,
         variants: image.variants.map(variant =>
@@ -46,12 +46,12 @@ export function toModel(record: Product) {
 }
 
 export function toObject(record: Product) {
-  const images = schema.parse(record.images)
+  const parsed = schema.parse(record.images)
   return {
     id: record.id,
     description: record.description,
     status: record.status,
-    images: images.map(image => ({
+    images: parsed.map(image => ({
       id: image.id,
       variants: image.variants.map(variant => ({
         url: variant.url,
@@ -84,5 +84,5 @@ export function fromModel(model: Models.Product.Model) {
         bucket: variant.bucket,
       })),
     })),
-  }
+  } satisfies Omit<Product, 'created_at' | 'updated_at'>
 }

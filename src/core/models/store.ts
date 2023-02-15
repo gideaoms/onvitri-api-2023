@@ -9,6 +9,7 @@ export type Phone = {
 export type Model = Readonly<{
   id: string
   cityId: string
+  ownerId: string
   fantasyName: string
   street: string
   number: string

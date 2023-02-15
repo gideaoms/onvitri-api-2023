@@ -95,6 +95,7 @@ describe('Create product', () => {
     const store = Models.Store.build({
       id: '123',
       cityId: '123',
+      ownerId: '123',
       fantasyName: 'fantasy name',
       street: 'street',
       number: 'number',
@@ -135,6 +136,7 @@ describe('Create product', () => {
     const store = Models.Store.build({
       id: '123',
       cityId: '123',
+      ownerId: '123',
       fantasyName: 'fantasy name',
       street: 'street',
       number: 'number',
@@ -220,6 +222,7 @@ describe('Create product', () => {
     const store = Models.Store.build({
       id: '123',
       cityId: '123',
+      ownerId: '123',
       fantasyName: 'fantasy name',
       street: 'street',
       number: 'number',

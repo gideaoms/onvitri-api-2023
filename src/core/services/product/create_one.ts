@@ -61,8 +61,11 @@ export class Service {
         }),
       ),
     })
-    if (Models.Product.isActive(product) && !Models.Product.hasValidAmountOfImages(product)) {
-      return Either.failure(new errors.BadRequest('O produto precisa ter entre 3 e 10 imagens'))
+    if (Models.Product.isActive(product) && !Models.Product.hasImage(product)) {
+      return Either.failure(new errors.BadRequest('You cannot publish a product without an image'))
+    }
+    if (Models.Product.isActive(product) && Models.Product.hasMoreImageThanAllowed(product)) {
+      return Either.failure(new errors.BadRequest('Your product has more images than allowed'))
     }
     const created = await this._productRepository.create(product)
     return Either.success(Mappers.Product.toObject(created))

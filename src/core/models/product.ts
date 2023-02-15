@@ -14,8 +14,13 @@ export function build(model: Model) {
   return model
 }
 
-export function hasValidAmountOfImages(model: Model) {
-  return model.images.length >= 3 && model.images.length <= 10
+export function hasImage(model: Model) {
+  return model.images.length > 0
+}
+
+export function hasMoreImageThanAllowed(model: Model) {
+  const max = 10
+  return model.images.length > max
 }
 
 export function isActive(model: Model) {

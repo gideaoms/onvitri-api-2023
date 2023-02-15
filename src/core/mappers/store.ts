@@ -4,6 +4,7 @@ export function toObject(model: Models.Store.Model) {
   return {
     id: model.id,
     city_id: model.cityId,
+    owner_id: model.ownerId,
     fantasy_name: model.fantasyName,
     street: model.street,
     number: model.number,
