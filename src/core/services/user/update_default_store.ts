@@ -23,7 +23,7 @@ export class Service {
     }
     const isOwner = store.success.ownerId === user.success.id
     if (!isOwner) {
-      return Either.failure(new errors.BadRequest('A loja informada pertence à outra pessoa'))
+      return Either.failure(new errors.BadRequest('You are not the owner of this store'))
     }
     const userToUpdate = Models.User.build({
       ...user.success,
