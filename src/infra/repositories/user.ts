@@ -1,11 +1,11 @@
 import errors from 'http-errors'
 import orm from '@/infra/libs/prisma.js'
-import * as Repositories from '@/core/repositories/mod.js'
+import * as UserRepository from '@/core/repositories/user.js'
 import * as Either from '@/utils/either.js'
-import * as Mappers from '@/infra/mappers/mod.js'
-import * as Models from '@/core/models/mod.js'
+import * as UserMapper from '@/infra/mappers/user.js'
+import * as UserModel from '@/core/models/user.js'
 
-export class Repository implements Repositories.User.Repository {
+export class Repository implements UserRepository.Repository {
   async findByEmail(email: string) {
     const user = await orm.user.findUnique({
       where: {
@@ -15,7 +15,7 @@ export class Repository implements Repositories.User.Repository {
     if (!user) {
       return Either.failure(new errors.NotFound('User not found'))
     }
-    return Either.success(Mappers.User.toModel(user))
+    return Either.success(UserMapper.toModel(user))
   }
 
   async findById(userId: string) {
@@ -27,16 +27,16 @@ export class Repository implements Repositories.User.Repository {
     if (!user) {
       return Either.failure(new errors.NotFound('User not found'))
     }
-    return Either.success(Mappers.User.toModel(user))
+    return Either.success(UserMapper.toModel(user))
   }
 
-  async update(user: Models.User.Model) {
+  async update(user: UserModel.Model) {
     const updated = await orm.user.update({
-      data: Mappers.User.fromModel(user),
+      data: UserMapper.fromModel(user),
       where: {
         id: user.id,
       },
     })
-    return Mappers.User.toModel(updated)
+    return UserMapper.toModel(updated)
   }
 }

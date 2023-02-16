@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import aws from 'aws-sdk'
 import format from 'date-fns/format'
-import * as Providers from '@/core/providers/mod.js'
-import * as Models from '@/core/models/mod.js'
+import * as StorageProvider from '@/core/providers/storage.js'
+import * as VariantModel from '@/core/models/variant.js'
 import * as Config from '@/config.js'
 
 const s3 = new aws.S3({
@@ -14,8 +14,8 @@ const s3 = new aws.S3({
   },
 })
 
-export class Provider implements Providers.Storage.Provider {
-  async create(variant: Models.Variant.Model) {
+export class Provider implements StorageProvider.Provider {
+  async create(variant: VariantModel.Model) {
     const folder = format(new Date(), 'yyyy-MM-dd')
     const bucket = `${Config.AWS_S3_NAME}/${folder}`
     await s3
@@ -27,7 +27,7 @@ export class Provider implements Providers.Storage.Provider {
         ContentType: 'image/webp',
       })
       .promise()
-    return Models.Variant.build({
+    return VariantModel.build({
       url: `https://${Config.AWS_S3_NAME}.${Config.AWS_S3_ENDPOINT}/${folder}/${variant.name}`,
       name: variant.name,
       ext: variant.ext,
@@ -38,7 +38,7 @@ export class Provider implements Providers.Storage.Provider {
     })
   }
 
-  async remove(variant: Models.Variant.Model) {
+  async remove(variant: VariantModel.Model) {
     await s3
       .deleteObject({
         Bucket: variant.bucket,

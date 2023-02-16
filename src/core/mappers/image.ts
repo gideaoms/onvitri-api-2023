@@ -1,6 +1,6 @@
-import * as Models from '@/core/models/mod.js'
+import * as ImageModel from '@/core/models/image.js'
 
-export function toObject(model: Models.Image.Model) {
+export function toObject(model: ImageModel.Model) {
   return {
     id: model.id,
     variants: model.variants.map(variant => ({
@@ -10,7 +10,6 @@ export function toObject(model: Models.Image.Model) {
       width: variant.width,
       height: variant.height,
       size: variant.size,
-      bucket: variant.bucket,
     })),
   }
 }

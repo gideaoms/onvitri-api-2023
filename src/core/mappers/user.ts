@@ -1,6 +1,6 @@
-import * as Models from '@/core/models/mod.js'
+import * as UserModel from '@/core/models/user.js'
 
-export function toObject(model: Models.User.Model) {
+export function toObject(model: UserModel.Model) {
   return {
     id: model.id,
     name: model.name,

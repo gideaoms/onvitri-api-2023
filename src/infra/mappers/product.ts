@@ -1,6 +1,8 @@
 import { Product } from '@prisma/client'
 import { z } from 'zod'
-import * as Models from '@/core/models/mod.js'
+import * as ProductModel from '@/core/models/product.js'
+import * as ImageModel from '@/core/models/image.js'
+import * as VariantModel from '@/core/models/variant.js'
 
 const schema = z.array(
   z.object({
@@ -21,16 +23,16 @@ const schema = z.array(
 
 export function toModel(record: Product) {
   const parsed = schema.parse(record.images)
-  return Models.Product.build({
+  return ProductModel.build({
     id: record.id,
     storeId: record.store_id,
     description: record.description,
     status: record.status,
     images: parsed.map(image =>
-      Models.Image.build({
+      ImageModel.build({
         id: image.id,
         variants: image.variants.map(variant =>
-          Models.Variant.build({
+          VariantModel.build({
             url: variant.url,
             name: variant.name,
             ext: variant.ext,
@@ -49,6 +51,7 @@ export function toObject(record: Product) {
   const parsed = schema.parse(record.images)
   return {
     id: record.id,
+    store_id: record.store_id,
     description: record.description,
     status: record.status,
     images: parsed.map(image => ({
@@ -66,7 +69,7 @@ export function toObject(record: Product) {
   }
 }
 
-export function fromModel(model: Models.Product.Model) {
+export function fromModel(model: ProductModel.Model) {
   return {
     id: model.id,
     store_id: model.storeId,

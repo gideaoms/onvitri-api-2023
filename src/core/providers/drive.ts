@@ -1,11 +1,11 @@
 import { Readable } from 'node:stream'
-import * as Models from '@/core/models/mod.js'
+import * as VariantModel from '@/core/models/variant.js'
 
 export type Provider = {
-  create(args: {
+  create(params: {
     readable: Readable
     width: number
     height?: number
-    size: Models.Variant.Size
-  }): Promise<Models.Variant.Model>
+    size: VariantModel.Size
+  }): Promise<VariantModel.Model>
 }

@@ -1,8 +1,8 @@
 import errors from 'http-errors'
-import * as Providers from '@/core/providers/mod.js'
+import * as TokenProvider from '@/core/providers/token.js'
 import * as Either from '@/utils/either.js'
 
-export class Provider implements Providers.Token.Provider {
+export class Provider implements TokenProvider.Provider {
   generate() {
     return 'valid_token'
   }

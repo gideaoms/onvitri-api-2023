@@ -1,8 +1,8 @@
-import * as Models from '@/core/models/mod.js'
+import * as UserModel from '@/core/models/user.js'
 import { Either } from '@/utils/either.js'
 
 export type Repository = {
-  findByEmail(email: string): Promise<Either<Error, Models.User.Model>>
-  findById(userId: string): Promise<Either<Error, Models.User.Model>>
-  update(user: Models.User.Model): Promise<Models.User.Model>
+  findByEmail(email: string): Promise<Either<Error, UserModel.Model>>
+  findById(userId: string): Promise<Either<Error, UserModel.Model>>
+  update(user: UserModel.Model): Promise<UserModel.Model>
 }

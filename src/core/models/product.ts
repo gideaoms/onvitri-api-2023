@@ -1,4 +1,4 @@
-import * as Image from '@/core/models/image.js'
+import * as ImageModel from '@/core/models/image.js'
 
 export type Status = 'active' | 'inactive'
 
@@ -7,7 +7,7 @@ export type Model = Readonly<{
   storeId: string
   description: string
   status: Status
-  images: Image.Model[]
+  images: ImageModel.Model[]
 }>
 
 export function build(model: Model) {

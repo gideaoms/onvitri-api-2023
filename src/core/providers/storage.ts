@@ -1,6 +1,6 @@
-import * as Models from '@/core/models/mod.js'
+import * as VariantModel from '@/core/models/variant.js'
 
 export type Provider = {
-  create(variant: Models.Variant.Model): Promise<Models.Variant.Model>
-  remove(variant: Models.Variant.Model): Promise<void>
+  create(variant: VariantModel.Model): Promise<VariantModel.Model>
+  remove(variant: VariantModel.Model): Promise<void>
 }

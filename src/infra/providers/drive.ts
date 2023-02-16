@@ -5,15 +5,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import sharp from 'sharp'
-import * as Providers from '@/core/providers/mod.js'
-import * as Models from '@/core/models/mod.js'
+import * as DriveProvider from '@/core/providers/drive.js'
+import * as VariantModel from '@/core/models/variant.js'
 
-export class Provider implements Providers.Drive.Provider {
+export class Provider implements DriveProvider.Provider {
   async create(args: {
     readable: Readable
     width: number
     height?: number
-    size: Models.Variant.Size
+    size: VariantModel.Size
   }) {
     const extension = 'webp'
     const name = `${crypto.randomBytes(50).toString('hex')}.${extension}`
@@ -30,7 +30,7 @@ export class Provider implements Providers.Drive.Provider {
     if (!metadata.width || !metadata.height) {
       throw new Error('Error while getting width and height metadata')
     }
-    return Models.Variant.build({
+    return VariantModel.build({
       url: diskUrl,
       name: name,
       ext: extension,

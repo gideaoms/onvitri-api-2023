@@ -1,10 +1,10 @@
 import errors from 'http-errors'
-import * as Repositories from '@/core/repositories/mod.js'
-import * as Models from '@/core/models/mod.js'
+import * as UserRepository from '@/core/repositories/user.js'
+import * as UserModel from '@/core/models/user.js'
 import * as Either from '@/utils/either.js'
 
-export class Repository implements Repositories.User.Repository {
-  private readonly _users: Models.User.Model[] = []
+export class Repository implements UserRepository.Repository {
+  private readonly _users: UserModel.Model[] = []
 
   async findByEmail(email: string) {
     const user = this._users.find(user => user.email === email)
@@ -22,13 +22,13 @@ export class Repository implements Repositories.User.Repository {
     return Either.success(user)
   }
 
-  async create(user: Models.User.Model) {
+  async create(user: UserModel.Model) {
     const newUser = Object.assign(user, { id: String(this._users.length + 1) })
     this._users.push(newUser)
     return newUser
   }
 
-  async update(userToUpdate: Models.User.Model) {
+  async update(userToUpdate: UserModel.Model) {
     this._users.map(user => (user.id === userToUpdate.id ? userToUpdate : user))
     return userToUpdate
   }

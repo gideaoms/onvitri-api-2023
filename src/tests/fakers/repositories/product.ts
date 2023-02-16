@@ -1,10 +1,10 @@
 import errors from 'http-errors'
-import * as Repositories from '@/core/repositories/mod.js'
-import * as Models from '@/core/models/mod.js'
+import * as ProductRepository from '@/core/repositories/product.js'
+import * as ProductModel from '@/core/models/product.js'
 import * as Either from '@/utils/either.js'
 
-export class Repository implements Repositories.Product.Repository {
-  private readonly _products: Models.Product.Model[] = []
+export class Repository implements ProductRepository.Repository {
+  private readonly _products: ProductModel.Model[] = []
 
   async findOne(productId: string) {
     const product = this._products.find(product => product.id === productId)
@@ -12,7 +12,7 @@ export class Repository implements Repositories.Product.Repository {
       return Either.failure(new errors.NotFound('Product not found'))
     }
     return Either.success(
-      Models.Product.build({
+      ProductModel.build({
         id: '123',
         storeId: '123',
         description: 'Any description',
@@ -22,18 +22,18 @@ export class Repository implements Repositories.Product.Repository {
     )
   }
 
-  async remove(product: Models.Product.Model) {
+  async remove(product: ProductModel.Model) {
     const index = this._products.findIndex(current => current.id === product.id)
     this._products.slice(index, 1)
   }
 
-  async create(product: Models.Product.Model) {
+  async create(product: ProductModel.Model) {
     const newProduct = Object.assign(product, { id: String(this._products.length + 1) })
     this._products.push(newProduct)
     return newProduct
   }
 
-  async update(product: Models.Product.Model) {
+  async update(product: ProductModel.Model) {
     const index = this._products.findIndex(current => current.id === product.id)
     this._products[index] = product
     return product

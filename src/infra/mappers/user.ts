@@ -1,8 +1,8 @@
 import { User } from '@prisma/client'
-import * as Models from '@/core/models/mod.js'
+import * as UserModel from '@/core/models/user.js'
 
 export function toModel(record: User) {
-  return Models.User.build({
+  return UserModel.build({
     id: record.id,
     email: record.email,
     name: record.name,
@@ -13,7 +13,7 @@ export function toModel(record: User) {
   })
 }
 
-export function fromModel(model: Models.User.Model) {
+export function fromModel(model: UserModel.Model) {
   return {
     id: model.id,
     name: model.name,

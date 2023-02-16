@@ -1,6 +1,6 @@
-import * as Models from '@/core/models/mod.js'
+import * as StoreModel from '@/core/models/store.js'
 
-export function toObject(model: Models.Store.Model) {
+export function toObject(model: StoreModel.Model) {
   return {
     id: model.id,
     city_id: model.cityId,

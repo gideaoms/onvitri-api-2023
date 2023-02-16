@@ -1,13 +1,14 @@
 import errors from 'http-errors'
-import * as Models from '@/core/models/mod.js'
-import * as Providers from '@/core/providers/mod.js'
-import * as Repositories from '@/core/repositories/mod.js'
+import * as UserModel from '@/core/models/user.js'
+import * as GuardianProvider from '@/core/providers/guardian.js'
+import * as TokenProvider from '@/core/providers/token.js'
+import * as UserRepository from '@/core/repositories/user.js'
 import * as Either from '@/utils/either.js'
 
-export class Provider implements Providers.Guardian.Provider {
+export class Provider implements GuardianProvider.Provider {
   constructor(
-    private readonly _tokenProvider: Providers.Token.Provider,
-    private readonly _userRepository: Repositories.User.Repository,
+    private readonly _tokenProvider: TokenProvider.Provider,
+    private readonly _userRepository: UserRepository.Repository,
   ) {}
 
   async passThrough(token: string) {
@@ -26,9 +27,9 @@ export class Provider implements Providers.Guardian.Provider {
     if (Either.isFailure(user)) {
       return Either.failure(new errors.Unauthorized())
     }
-    if (!Models.User.isActive(user.success)) {
+    if (!UserModel.isActive(user.success)) {
       return Either.failure(new errors.Unauthorized('Inactivated profile'))
     }
-    return Either.success(Models.User.build({ ...user.success, token: rawToken }))
+    return Either.success(UserModel.build({ ...user.success, token: rawToken }))
   }
 }

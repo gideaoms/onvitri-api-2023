@@ -1,10 +1,10 @@
 import errors from 'http-errors'
 import orm from '@/infra/libs/prisma.js'
-import * as Repositories from '@/core/repositories/mod.js'
+import * as StoreRepository from '@/core/repositories/store.js'
 import * as Either from '@/utils/either.js'
-import * as Mappers from '@/infra/mappers/mod.js'
+import * as StoreMapper from '@/infra/mappers/store.js'
 
-export class Repository implements Repositories.Store.Repository {
+export class Repository implements StoreRepository.Repository {
   async findOne(storeId: string) {
     const store = await orm.store.findUnique({
       where: {
@@ -14,6 +14,6 @@ export class Repository implements Repositories.Store.Repository {
     if (!store) {
       return Either.failure(new errors.NotFound('Store not found'))
     }
-    return Either.success(Mappers.Store.toModel(store))
+    return Either.success(StoreMapper.toModel(store))
   }
 }
