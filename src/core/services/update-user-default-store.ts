@@ -37,10 +37,7 @@ export class Service {
     const updated = await this._userRepository.update(userToUpdate)
     return Either.success({
       ...UserMapper.toObject(updated),
-      default_store: {
-        ...StoreMapper.toObject(store.success),
-        city: CityMapper.toObject(store.success.city),
-      },
+      default_store: StoreMapper.toObject(store.success),
     })
   }
 }

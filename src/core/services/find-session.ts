@@ -25,10 +25,7 @@ export class Service {
       }
       return Either.success({
         ...UserMapper.toObject(user.success),
-        default_store: {
-          ...StoreMapper.toObject(store.success),
-          city: CityMapper.toObject(store.success.city),
-        },
+        default_store: StoreMapper.toObject(store.success),
       })
     }
     return Either.success(UserMapper.toObject(user.success))

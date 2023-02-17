@@ -1,4 +1,5 @@
 import * as StoreModel from '@/core/models/store.js'
+import * as CityMapper from '@/core/mappers/city.js'
 
 export function toObject(model: StoreModel.Model) {
   return {
@@ -15,5 +16,6 @@ export function toObject(model: StoreModel.Model) {
       number: model.phone.number,
     },
     status: model.status,
+    city: CityMapper.toObject(model.city),
   }
 }
