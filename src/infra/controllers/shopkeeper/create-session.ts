@@ -4,11 +4,17 @@ import { Type } from '@sinclair/typebox'
 import * as CreateSession from '@/core/services/create-session.js'
 import * as TokenProvider from '@/infra/providers/token.js'
 import * as UserRepository from '@/infra/repositories/user.js'
+import * as StoreRepository from '@/infra/repositories/store.js'
 import * as Either from '@/utils/either.js'
 
 const userRepository = new UserRepository.Repository()
 const tokenProvider = new TokenProvider.Provider()
-const createSession = new CreateSession.Service(userRepository, tokenProvider)
+const storeRepository = new StoreRepository.Repository()
+const createSession = new CreateSession.Service(
+  userRepository,
+  tokenProvider,
+  storeRepository,
+)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
