@@ -1,6 +1,7 @@
 import { z } from 'zod'
-import { Store } from '@prisma/client'
+import { City, Store } from '@prisma/client'
 import * as StoreModel from '@/core/models/store.js'
+import * as CityModel from '@/core/models/city.js'
 
 const schema = z.object({
   country_code: z.string(),
@@ -8,7 +9,7 @@ const schema = z.object({
   number: z.string(),
 })
 
-export function toModel(record: Store) {
+export function toModel(record: Store & { city: City }) {
   const parsed = schema.parse(record.phone)
   return StoreModel.build({
     id: record.id,
@@ -24,6 +25,11 @@ export function toModel(record: Store) {
       areaCode: parsed.area_code,
       number: parsed.number,
     },
+    city: CityModel.build({
+      id: record.city.id,
+      name: record.city.name,
+      initials: record.city.initials,
+    }),
   })
 }
 

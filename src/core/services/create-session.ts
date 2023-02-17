@@ -5,6 +5,7 @@ import * as TokenProvider from '@/core/providers/token.js'
 import * as UserMapper from '@/core/mappers/user.js'
 import * as UserModel from '@/core/models/user.js'
 import * as StoreMapper from '@/core/mappers/store.js'
+import * as CityMapper from '@/core/mappers/city.js'
 import * as StoreRepository from '@/core/repositories/store.js'
 
 export class Service {
@@ -39,7 +40,10 @@ export class Service {
       }
       return Either.success({
         ...UserMapper.toObject(userWithToken),
-        default_store: StoreMapper.toObject(store.success),
+        default_store: {
+          ...StoreMapper.toObject(store.success),
+          city: CityMapper.toObject(store.success.city),
+        },
       })
     }
     return Either.success(UserMapper.toObject(userWithToken))

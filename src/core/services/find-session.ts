@@ -2,6 +2,7 @@ import * as GuardianProvider from '@/core/providers/guardian.js'
 import * as Either from '@/utils/either.js'
 import * as UserMapper from '@/core/mappers/user.js'
 import * as StoreMapper from '@/core/mappers/store.js'
+import * as CityMapper from '@/core/mappers/city.js'
 import * as StoreRepository from '@/core/repositories/store.js'
 
 export class Service {
@@ -24,7 +25,10 @@ export class Service {
       }
       return Either.success({
         ...UserMapper.toObject(user.success),
-        default_store: StoreMapper.toObject(store.success),
+        default_store: {
+          ...StoreMapper.toObject(store.success),
+          city: CityMapper.toObject(store.success.city),
+        },
       })
     }
     return Either.success(UserMapper.toObject(user.success))

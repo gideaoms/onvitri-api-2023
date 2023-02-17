@@ -1,3 +1,5 @@
+import * as CityModel from '@/core/models/city.js'
+
 export type Status = 'active' | 'inactive'
 
 export type Phone = {
@@ -16,6 +18,7 @@ export type Model = Readonly<{
   neighborhood: string
   phone: Phone
   status: Status
+  city: CityModel.Model
 }>
 
 export function build(model: Model) {

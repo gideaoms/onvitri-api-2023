@@ -10,6 +10,9 @@ export class Repository implements StoreRepository.Repository {
       where: {
         id: storeId,
       },
+      include: {
+        city: true,
+      },
     })
     if (!store) {
       return Either.failure(new errors.NotFound('Store not found'))

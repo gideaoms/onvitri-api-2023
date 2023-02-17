@@ -6,6 +6,7 @@ import * as ProductRepository from '@/tests/fakers/repositories/product.js'
 import * as GuardianProvider from '@/tests/fakers/providers/guardian.js'
 import * as Either from '@/utils/either.js'
 import * as StoreModel from '@/core/models/store.js'
+import * as CityModel from '@/core/models/city.js'
 
 describe('Create product', () => {
   it('should return an error when token is invalid', async () => {
@@ -107,6 +108,11 @@ describe('Create product', () => {
         number: 'number',
       },
       status: 'active',
+      city: CityModel.build({
+        id: '123',
+        name: 'any name',
+        initials: 'any initials',
+      }),
     })
     await storeRepository.create(store)
     const token = 'valid_token'
@@ -148,6 +154,11 @@ describe('Create product', () => {
         number: 'number',
       },
       status: 'active',
+      city: CityModel.build({
+        id: '123',
+        name: 'any name',
+        initials: 'any initials',
+      }),
     })
     await storeRepository.create(store)
     const token = 'valid_token'
@@ -234,6 +245,11 @@ describe('Create product', () => {
         number: 'number',
       },
       status: 'active',
+      city: CityModel.build({
+        id: '123',
+        name: 'any name',
+        initials: 'any initials',
+      }),
     })
     await storeRepository.create(store)
     const token = 'valid_token'
