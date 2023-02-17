@@ -10,9 +10,15 @@ import * as Either from '@/utils/either.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const productRepository = new ProductRepository.Repository()
-const updateProduct = new UpdateProduct.Service(guardianProvider, productRepository)
+const updateProduct = new UpdateProduct.Service(
+  guardianProvider,
+  productRepository,
+)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
@@ -27,7 +33,10 @@ export default async function Controller(fastify: FastifyInstance) {
       }),
       body: Type.Object({
         description: Type.String(),
-        status: Type.Enum({ active: 'active' as const, inactive: 'inactive' as const }),
+        status: Type.Enum({
+          active: 'active' as const,
+          inactive: 'inactive' as const,
+        }),
         images: Type.Array(
           Type.Object({
             id: Type.String({ format: 'uuid' }),
@@ -38,7 +47,10 @@ export default async function Controller(fastify: FastifyInstance) {
                 name: Type.String(),
                 width: Type.Integer(),
                 height: Type.Integer(),
-                size: Type.Enum({ mini: 'mini' as const, normal: 'normal' as const }),
+                size: Type.Enum({
+                  mini: 'mini' as const,
+                  normal: 'normal' as const,
+                }),
                 bucket: Type.String(),
               }),
             ),

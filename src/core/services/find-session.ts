@@ -16,7 +16,9 @@ export class Service {
       return Either.failure(user.failure)
     }
     if (user.success.defaultStoreId) {
-      const store = await this._storeRepository.findOne(user.success.defaultStoreId)
+      const store = await this._storeRepository.findOne(
+        user.success.defaultStoreId,
+      )
       if (Either.isFailure(store)) {
         throw new Error(`Something went wrong`, { cause: store.failure })
       }

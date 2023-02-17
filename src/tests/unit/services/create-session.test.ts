@@ -10,20 +10,28 @@ describe('Create session', () => {
   it('should return an error when email is wrong', async () => {
     const userRepository = new UserRepository.Repository()
     const tokenProvider = new TokenProvider.Provider()
-    const createSession = new CreateSession.Service(userRepository, tokenProvider)
+    const createSession = new CreateSession.Service(
+      userRepository,
+      tokenProvider,
+    )
     const email = 'invalid_mail'
     const validationCode = 'valid_code'
     const result = await createSession.exec(email, validationCode)
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(new errors.BadRequest('Email e/ou código incorretos'))
+    expect(result.failure).toStrictEqual(
+      new errors.BadRequest('Email e/ou código incorretos'),
+    )
   })
 
   it('should return an error when code is wrong', async () => {
     const userRepository = new UserRepository.Repository()
     const tokenProvider = new TokenProvider.Provider()
-    const createSession = new CreateSession.Service(userRepository, tokenProvider)
+    const createSession = new CreateSession.Service(
+      userRepository,
+      tokenProvider,
+    )
     const user = UserModel.build({
       id: 'id',
       name: 'name',
@@ -39,13 +47,18 @@ describe('Create session', () => {
     if (Either.isSuccess(result)) {
       throw new Error('It should not get here')
     }
-    expect(result.failure).toStrictEqual(new errors.BadRequest('Email e/ou código incorretos'))
+    expect(result.failure).toStrictEqual(
+      new errors.BadRequest('Email e/ou código incorretos'),
+    )
   })
 
   it('should successfully create a new session', async () => {
     const userRepository = new UserRepository.Repository()
     const tokenProvider = new TokenProvider.Provider()
-    const createSession = new CreateSession.Service(userRepository, tokenProvider)
+    const createSession = new CreateSession.Service(
+      userRepository,
+      tokenProvider,
+    )
     const user = UserModel.build({
       id: 'id',
       name: 'name',

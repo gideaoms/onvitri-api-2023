@@ -1,4 +1,7 @@
-export const NODE_ENV = process.env.NODE_ENV as 'development' | 'test' | 'production'
+export const NODE_ENV = process.env.NODE_ENV as
+  | 'development'
+  | 'test'
+  | 'production'
 
 export const APP_PORT = Number(process.env.APP_PORT)
 

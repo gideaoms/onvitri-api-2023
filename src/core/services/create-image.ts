@@ -25,7 +25,9 @@ export class Service {
       width: 1000,
       size: 'normal',
     })
-    const normalStorageVariant = await this._storageProvider.create(normalDriveVariant)
+    const normalStorageVariant = await this._storageProvider.create(
+      normalDriveVariant,
+    )
     const miniReadableVariant = fs.createReadStream(normalDriveVariant.url)
     const miniDriveVariant = await this._driveProvider.create({
       readable: miniReadableVariant,
@@ -33,7 +35,9 @@ export class Service {
       height: 200,
       size: 'mini',
     })
-    const miniStorageVariant = await this._storageProvider.create(miniDriveVariant)
+    const miniStorageVariant = await this._storageProvider.create(
+      miniDriveVariant,
+    )
     const image = ImageModel.build({
       id: crypto.randomUUID(),
       variants: [normalStorageVariant, miniStorageVariant],

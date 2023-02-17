@@ -17,12 +17,16 @@ export class Service {
     if (Either.isFailure(user)) {
       return Either.failure(new errors.BadRequest(message))
     }
-    const isValidationCodeCorrect = user.success.validationCode === validationCode
+    const isValidationCodeCorrect =
+      user.success.validationCode === validationCode
     if (!isValidationCodeCorrect) {
       return Either.failure(new errors.BadRequest(message))
     }
     const generatedToken = this._tokenProvider.generate(user.success.id)
-    const userWithToken = UserModel.build({ ...user.success, token: generatedToken })
+    const userWithToken = UserModel.build({
+      ...user.success,
+      token: generatedToken,
+    })
     return Either.success(UserMapper.toObject(userWithToken))
   }
 }

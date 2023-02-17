@@ -12,7 +12,10 @@ import * as Either from '@/utils/either.js'
 const productRepository = new ProductRepository.Repository()
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const storageProvider = new StorageProvider.Provider()
 const removeProduct = new RemoveProduct.Service(
   productRepository,

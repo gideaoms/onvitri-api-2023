@@ -28,7 +28,9 @@ export class Repository implements ProductRepository.Repository {
   }
 
   async create(product: ProductModel.Model) {
-    const newProduct = Object.assign(product, { id: String(this._products.length + 1) })
+    const newProduct = Object.assign(product, {
+      id: String(this._products.length + 1),
+    })
     this._products.push(newProduct)
     return newProduct
   }

@@ -25,7 +25,9 @@ export default async function Controller(fastify: FastifyInstance) {
       if (Either.isFailure(result)) {
         return replay.code(400).send({ message: result.failure.message })
       }
-      return replay.header('x-has-more', result.success.hasMore).send(result.success.data)
+      return replay
+        .header('x-has-more', result.success.hasMore)
+        .send(result.success.data)
     },
   })
 }

@@ -36,7 +36,10 @@ export class Service {
     if (Either.isFailure(user)) {
       return Either.failure(user.failure)
     }
-    const found = await this._productRepository.findOne(body.productId, user.success.id)
+    const found = await this._productRepository.findOne(
+      body.productId,
+      user.success.id,
+    )
     if (Either.isFailure(found)) {
       return Either.failure(found.failure)
     }
@@ -63,10 +66,17 @@ export class Service {
       status: body.status,
     })
     if (ProductModel.isActive(product) && !ProductModel.hasImage(product)) {
-      return Either.failure(new errors.BadRequest('You cannot publish a product without an image'))
+      return Either.failure(
+        new errors.BadRequest('You cannot publish a product without an image'),
+      )
     }
-    if (ProductModel.isActive(product) && ProductModel.hasMoreImageThanAllowed(product)) {
-      return Either.failure(new errors.BadRequest('Your product has more images than allowed'))
+    if (
+      ProductModel.isActive(product) &&
+      ProductModel.hasMoreImageThanAllowed(product)
+    ) {
+      return Either.failure(
+        new errors.BadRequest('Your product has more images than allowed'),
+      )
     }
     const updated = await this._productRepository.update(product)
     return Either.success(ProductMapper.toObject(updated))

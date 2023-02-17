@@ -11,7 +11,10 @@ import * as Either from '@/utils/either.js'
 const userRepository = new UserRepository.Repository()
 const storeRepository = new StoreRepository.Repository()
 const tokenProvider = new TokenProvider.Provider()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const createSession = new UpdateUserDefaultStore.Service(
   guardianProvider,
   userRepository,

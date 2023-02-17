@@ -9,7 +9,10 @@ import * as Either from '@/utils/either.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const findProduct = new FindProduct.Query(guardianProvider)
 
 export default async function Controller(fastify: FastifyInstance) {

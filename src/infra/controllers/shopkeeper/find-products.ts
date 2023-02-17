@@ -9,7 +9,10 @@ import * as Either from '@/utils/either.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const findProducts = new FindProducts.Query(guardianProvider)
 
 export default async function Controller(fastify: FastifyInstance) {
@@ -31,7 +34,9 @@ export default async function Controller(fastify: FastifyInstance) {
       if (Either.isFailure(result)) {
         return replay.code(400).send({ message: result.failure.message })
       }
-      return replay.header('x-has-more', result.success.hasMore).send(result.success.data)
+      return replay
+        .header('x-has-more', result.success.hasMore)
+        .send(result.success.data)
     },
   })
 }

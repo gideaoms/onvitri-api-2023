@@ -10,7 +10,10 @@ import * as Either from '@/utils/either.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const storeRepository = new StoreRepository.Repository()
 const findSession = new FindSession.Service(guardianProvider, storeRepository)
 

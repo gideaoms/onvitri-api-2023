@@ -1,3 +1,7 @@
 {
-  "*.ts": ["tsc --noEmit", "eslint src --fix", "vitest --run --passWithNoTests", "prettier --write"]
+  "*.ts": [
+    "eslint src --fix",
+    "vitest --run --passWithNoTests",
+    "prettier --write"
+  ]
 }

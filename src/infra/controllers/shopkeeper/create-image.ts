@@ -11,10 +11,17 @@ import * as CreateImage from '@/core/services/create-image.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const driverProvider = new DriveProvider.Provider()
 const storageProvider = new StorageProvider.Provider()
-const createImage = new CreateImage.Service(driverProvider, storageProvider, guardianProvider)
+const createImage = new CreateImage.Service(
+  driverProvider,
+  storageProvider,
+  guardianProvider,
+)
 
 export default async function Controller(fastify: FastifyInstance) {
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({

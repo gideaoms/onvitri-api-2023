@@ -25,7 +25,11 @@ export class Provider implements DriveProvider.Provider {
         withoutEnlargement: !args.height,
       })
       .webp()
-    await stream.pipeline(args.readable, transformer, fs.createWriteStream(diskUrl))
+    await stream.pipeline(
+      args.readable,
+      transformer,
+      fs.createWriteStream(diskUrl),
+    )
     const metadata = await sharp(diskUrl).metadata()
     if (!metadata.width || !metadata.height) {
       throw new Error('Error while getting width and height metadata')

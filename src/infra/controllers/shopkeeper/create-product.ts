@@ -11,7 +11,10 @@ import * as Either from '@/utils/either.js'
 
 const tokenProvider = new TokenProvider.Provider()
 const userRepository = new UserRepository.Repository()
-const guardianProvider = new GuardianProvider.Provider(tokenProvider, userRepository)
+const guardianProvider = new GuardianProvider.Provider(
+  tokenProvider,
+  userRepository,
+)
 const storeRepository = new StoreRepository.Repository()
 const productRepository = new ProductRepository.Repository()
 const createProduct = new CreateProduct.Service(
@@ -31,7 +34,10 @@ export default async function Controller(fastify: FastifyInstance) {
       body: Type.Object({
         store_id: Type.String({ format: 'uuid' }),
         description: Type.String({ minLength: 1 }),
-        status: Type.Enum({ active: 'active' as const, inactive: 'inactive' as const }),
+        status: Type.Enum({
+          active: 'active' as const,
+          inactive: 'inactive' as const,
+        }),
         images: Type.Array(
           Type.Object({
             id: Type.String({ format: 'uuid' }),
@@ -42,7 +48,10 @@ export default async function Controller(fastify: FastifyInstance) {
                 name: Type.String(),
                 width: Type.Integer(),
                 height: Type.Integer(),
-                size: Type.Enum({ mini: 'mini' as const, normal: 'normal' as const }),
+                size: Type.Enum({
+                  mini: 'mini' as const,
+                  normal: 'normal' as const,
+                }),
                 bucket: Type.String(),
               }),
             ),

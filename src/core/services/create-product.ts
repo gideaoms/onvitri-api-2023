@@ -65,10 +65,17 @@ export class Service {
       ),
     })
     if (ProductModel.isActive(product) && !ProductModel.hasImage(product)) {
-      return Either.failure(new errors.BadRequest('You cannot publish a product without an image'))
+      return Either.failure(
+        new errors.BadRequest('You cannot publish a product without an image'),
+      )
     }
-    if (ProductModel.isActive(product) && ProductModel.hasMoreImageThanAllowed(product)) {
-      return Either.failure(new errors.BadRequest('Your product has more images than allowed'))
+    if (
+      ProductModel.isActive(product) &&
+      ProductModel.hasMoreImageThanAllowed(product)
+    ) {
+      return Either.failure(
+        new errors.BadRequest('Your product has more images than allowed'),
+      )
     }
     const created = await this._productRepository.create(product)
     return Either.success(ProductMapper.toObject(created))
