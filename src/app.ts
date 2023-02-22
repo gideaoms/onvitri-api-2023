@@ -1,3 +1,4 @@
+import '@total-typescript/ts-reset'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { fastify } from 'fastify'

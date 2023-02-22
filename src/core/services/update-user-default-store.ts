@@ -6,7 +6,6 @@ import * as Either from '@/utils/either.js'
 import * as UserModel from '@/core/models/user.js'
 import * as UserMapper from '@/core/mappers/user.js'
 import * as StoreMapper from '@/core/mappers/store.js'
-import * as CityMapper from '@/core/mappers/city.js'
 
 export class Service {
   constructor(

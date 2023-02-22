@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "prisma generate && tsx watch src/server.ts",
+    "start:dev": "prisma generate && tsx watch --clear-screen=false src/server.ts",
     "build": "tsc && tsc-alias && copyfiles --up 2 src/email-templates/**/* dist/email-templates",
     "prepare": "husky install"
   },
@@ -54,6 +54,7 @@
     "@sentry/node": "^7.28.1",
     "@sentry/tracing": "^7.28.1",
     "@sinclair/typebox": "^0.25.16",
+    "@total-typescript/ts-reset": "^0.3.7",
     "aws-sdk": "^2.1290.0",
     "date-fns": "^2.29.3",
     "fastify": "^4.10.2",
