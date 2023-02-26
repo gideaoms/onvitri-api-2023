@@ -1,16 +1,16 @@
 import '@total-typescript/ts-reset'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import url from 'url'
 import { fastify } from 'fastify'
 import autoload from '@fastify/autoload'
 import cors from '@fastify/cors'
 import multipart from '@fastify/multipart'
 import staticy from '@fastify/static'
 import helmet from '@fastify/helmet'
-import { captureException } from '@sentry/node'
+import * as sentry from '@sentry/node'
 import * as Config from '@/config.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 export const app = fastify({
   logger: Config.NODE_ENV === 'development',
@@ -18,7 +18,7 @@ export const app = fastify({
 
 app.setErrorHandler(err => {
   app.log.error(err)
-  captureException(err)
+  sentry.captureException(err)
   throw err
 })
 
