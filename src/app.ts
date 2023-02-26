@@ -16,7 +16,7 @@ export const app = fastify({
   logger: Config.NODE_ENV === 'development',
 })
 
-app.setErrorHandler(async err => {
+app.setErrorHandler(err => {
   app.log.error(err)
   captureException(err)
   throw err
@@ -31,6 +31,8 @@ app.register(staticy, {
 app.register(multipart)
 app.register(autoload, {
   dir: path.join(__dirname, 'infra', 'controllers'),
-  options: { prefix: '/v1' },
+  options: {
+    prefix: '/v1',
+  },
   dirNameRoutePrefix: false,
 })
