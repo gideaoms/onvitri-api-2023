@@ -78,7 +78,7 @@ export class Service {
         new errors.BadRequest('Your product has more images than allowed'),
       )
     }
-    const updated = await this._productRepository.update(product)
-    return Either.success(ProductMapper.toObject(updated))
+    const updatedProduct = await this._productRepository.update(product)
+    return Either.success(ProductMapper.toObject(updatedProduct))
   }
 }

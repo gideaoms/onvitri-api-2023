@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "start:dev": "prisma generate && tsx watch --clear-screen=false src/server.ts",
-    "build": "tsc && tsc-alias && copyfiles --up 2 src/email-templates/**/* dist/email-templates",
+    "build": "tsc -p tsconfig.build.json && tsc-alias && copyfiles --up 2 src/email-templates/**/* dist/email-templates",
     "prepare": "husky install"
   },
   "keywords": [],

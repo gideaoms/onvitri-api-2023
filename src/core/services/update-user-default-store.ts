@@ -33,9 +33,9 @@ export class Service {
       ...user.success,
       defaultStoreId,
     })
-    const updated = await this._userRepository.update(userToUpdate)
+    const updatedUser = await this._userRepository.update(userToUpdate)
     return Either.success({
-      ...UserMapper.toObject(updated),
+      ...UserMapper.toObject(updatedUser),
       default_store: StoreMapper.toObject(store.success),
     })
   }
