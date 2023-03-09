@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken'
 import errors from 'http-errors'
-import * as Config from '@/config.js'
+import Config from '@/config.js'
 import * as TokenProvider from '@/core/providers/token.js'
 import * as Either from '@/utils/either.js'
 

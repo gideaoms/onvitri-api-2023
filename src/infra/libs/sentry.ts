@@ -1,5 +1,5 @@
 import { init } from '@sentry/node'
-import * as Config from '@/config.js'
+import Config from '@/config.js'
 import '@sentry/tracing'
 
 init({

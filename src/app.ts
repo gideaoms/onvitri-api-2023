@@ -8,7 +8,7 @@ import multipart from '@fastify/multipart'
 import staticy from '@fastify/static'
 import helmet from '@fastify/helmet'
 import * as sentry from '@sentry/node'
-import * as Config from '@/config.js'
+import Config from '@/config.js'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 

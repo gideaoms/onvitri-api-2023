@@ -3,7 +3,7 @@ import aws from 'aws-sdk'
 import format from 'date-fns/format'
 import * as StorageProvider from '@/core/providers/storage.js'
 import * as VariantModel from '@/core/models/variant.js'
-import * as Config from '@/config.js'
+import Config from '@/config.js'
 
 const s3 = new aws.S3({
   endpoint: Config.AWS_S3_ENDPOINT,
