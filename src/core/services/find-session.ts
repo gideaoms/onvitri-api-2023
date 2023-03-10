@@ -2,7 +2,6 @@ import * as GuardianProvider from '@/core/providers/guardian.js'
 import * as Either from '@/utils/either.js'
 import * as UserMapper from '@/core/mappers/user.js'
 import * as StoreMapper from '@/core/mappers/store.js'
-import * as CityMapper from '@/core/mappers/city.js'
 import * as StoreRepository from '@/core/repositories/store.js'
 
 export class Service {
@@ -21,7 +20,7 @@ export class Service {
         user.success.defaultStoreId,
       )
       if (Either.isFailure(store)) {
-        throw new Error(`Something went wrong`, { cause: store.failure })
+        return Either.failure(store.failure)
       }
       return Either.success({
         ...UserMapper.toObject(user.success),

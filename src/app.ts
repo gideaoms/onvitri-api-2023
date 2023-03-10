@@ -8,12 +8,12 @@ import multipart from '@fastify/multipart'
 import staticy from '@fastify/static'
 import helmet from '@fastify/helmet'
 import * as sentry from '@sentry/node'
-import Config from '@/config.js'
+import config from '@/config.js'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 export const app = fastify({
-  logger: Config.NODE_ENV === 'development',
+  logger: config.NODE_ENV === 'development',
 })
 
 app.setErrorHandler(err => {

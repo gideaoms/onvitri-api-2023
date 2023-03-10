@@ -1,10 +1,10 @@
 import { app } from '@/app.js'
-import Config from '@/config.js'
+import config from '@/config.js'
 
 app
   .listen({
-    port: Config.PORT,
-    host: Config.HOST,
+    port: config.PORT,
+    host: config.HOST,
   })
   .catch(err => {
     app.log.error(err)

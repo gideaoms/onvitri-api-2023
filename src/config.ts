@@ -11,7 +11,7 @@ export default z
     AWS_ACCESS_KEY_ID: z.string(),
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_S3_ENDPOINT: z.string(),
-    AWS_S3_NAME: z.string(),
+    AWS_S3_BUCKET: z.string(),
     SENTRY_DSN: z.string().optional(),
   })
   .parse(process.env)

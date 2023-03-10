@@ -1,23 +1,22 @@
 import fs from 'node:fs'
 import aws from 'aws-sdk'
-import format from 'date-fns/format'
+import fns from 'date-fns'
 import * as StorageProvider from '@/core/providers/storage.js'
 import * as VariantModel from '@/core/models/variant.js'
-import Config from '@/config.js'
+import config from '@/config.js'
 
 const s3 = new aws.S3({
-  endpoint: Config.AWS_S3_ENDPOINT,
-  region: 'sfo3',
+  endpoint: config.AWS_S3_ENDPOINT,
   credentials: {
-    accessKeyId: Config.AWS_ACCESS_KEY_ID,
-    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
   },
 })
 
 export class Provider implements StorageProvider.Provider {
   async create(variant: VariantModel.Model) {
-    const folder = format(new Date(), 'yyyy-MM-dd')
-    const bucket = `${Config.AWS_S3_NAME}/${folder}`
+    const folder = fns.format(new Date(), 'yyyy-MM-dd')
+    const bucket = `${config.AWS_S3_BUCKET}/${folder}`
     await s3
       .putObject({
         Bucket: bucket,
@@ -27,8 +26,9 @@ export class Provider implements StorageProvider.Provider {
         ContentType: 'image/webp',
       })
       .promise()
+    const url = `https://${config.AWS_S3_BUCKET}.${config.AWS_S3_ENDPOINT}/${folder}/${variant.name}`
     return VariantModel.build({
-      url: `https://${Config.AWS_S3_NAME}.${Config.AWS_S3_ENDPOINT}/${folder}/${variant.name}`,
+      url: url,
       name: variant.name,
       ext: variant.ext,
       width: variant.width,
