@@ -3,7 +3,7 @@ import { z } from 'zod'
 export default z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']),
-    PORT: z.number(),
+    PORT: z.coerce.number(),
     HOST: z.string().optional(),
     DATABASE_URL: z.string(),
     TOKEN_SECRET: z.string(),

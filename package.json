@@ -8,7 +8,6 @@
     "start": "node dist/server.js",
     "start:dev": "prisma generate && tsx watch --clear-screen=false src/server.ts",
     "build": "tsc -p tsconfig.build.json && tsc-alias && copyfiles --up 2 src/email-templates/**/* dist/email-templates",
-    "build:digitalocean": "npm install --production=false && npm run build && npm ci",
     "prepare": "husky install"
   },
   "keywords": [],
