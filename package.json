@@ -13,10 +13,6 @@
   "keywords": [],
   "author": "Gideão Silva <gideaoms@gmail.com>",
   "license": "ISC",
-  "engines": {
-    "node": "18.12.1",
-    "npm": "8.19.2"
-  },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
