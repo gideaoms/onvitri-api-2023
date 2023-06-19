@@ -1,0 +1,45 @@
+version: '3.9'
+
+volumes:
+  onvitri_postgres:
+
+services:
+  onvitri_api:
+    container_name: onvitri_api
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    command: npm run start:dev
+    ports:
+      - ${PORT}:${PORT}
+    working_dir: /usr/app
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    tty: true
+    depends_on:
+      onvitri_postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  onvitri_postgres:
+    container_name: onvitri_postgres
+    image: bitnami/postgresql:12.5.0
+    env_file:
+      - .env
+    ports:
+      - ${DATABASE_PORT}:5432
+    environment:
+      POSTGRESQL_USERNAME: ${DATABASE_USER}
+      POSTGRESQL_PASSWORD: ${DATABASE_PASS}
+      POSTGRESQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - onvitri_postgres:/bitnami/postgresql
+    healthcheck:
+      test: pg_isready --username $DATABASE_USER
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    tty: true
