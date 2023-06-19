@@ -10,3 +10,5 @@ app
     app.log.error(err)
     process.exit(1)
   })
+
+console.log('testing')
